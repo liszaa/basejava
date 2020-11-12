@@ -8,7 +8,7 @@ public class ArrayStorage {
     private int amountOfResumes = 0;
 
     void clear(){
-        for (int i = amountOfResumes; i >= 0; i -= 1) {
+        for (int i = amountOfResumes; i >= 0; i--) {
             storage[i] = null;
 
         }
@@ -16,14 +16,8 @@ public class ArrayStorage {
     }
 
     void save(Resume r){
-        for (int i = amountOfResumes; i >= 0; i -= 1) {
-            if (i == 0) {
-                storage[i] = r;
-                break;
-            }
-            storage[i] = storage[i - 1];
-        }
-        amountOfResumes += 1;
+        storage[amountOfResumes] = r;
+        amountOfResumes++;
     }
 
     Resume get(String uuid){
@@ -36,18 +30,18 @@ public class ArrayStorage {
     }
 
     void delete(String uuid){
-        int indexTODelete = 0;
+        int indexToDelete = -1;
 
         for (int i = 0; i < amountOfResumes; i++) {
             if (uuid.equals(storage[i].uuid)) {
-                indexTODelete = i;
+                indexToDelete = i;
             }
         }
 
-        if (amountOfResumes - indexTODelete >= 0)
-            System.arraycopy(storage, indexTODelete + 1, storage, indexTODelete, amountOfResumes - indexTODelete);
-
-        amountOfResumes -= 1;
+        if (amountOfResumes != -1) {
+            System.arraycopy(storage, indexToDelete + 1, storage, indexToDelete, amountOfResumes - indexToDelete);
+            amountOfResumes--;
+        }
     }
 
     /**
@@ -63,6 +57,4 @@ public class ArrayStorage {
         return amountOfResumes;
     }
 
-
 }
-
