@@ -31,8 +31,9 @@ public class ArrayStorage {
 
     public void save(Resume r){
 
-        if (contains(r.getUuid())) {
-            System.out.println("Method save: Резюме(" + r.getUuid() + ") уже добавлено в список!\n");
+
+        if ((contains(r.getUuid())) || amountOfResumes >= 10000) {
+            System.out.println("Method save: Резюме(" + r.getUuid() + ") не может быть добавлено в список (уже есть или нет места)\n");
         } else {
             storage[amountOfResumes] = r;
             amountOfResumes++;
