@@ -1,6 +1,7 @@
-package com.urise.webapp.storage;
+package com.urise.webapp;
 
 import com.urise.webapp.model.Resume;
+import com.urise.webapp.storage.ArrayStorage;
 
 /**
  * Test for your com.urise.webapp.storage.ArrayStorage implementation
@@ -8,7 +9,7 @@ import com.urise.webapp.model.Resume;
 public class MainTestArrayStorage {
     static final ArrayStorage ARRAY_STORAGE = new ArrayStorage();
 
-    public static void main(String[] args){
+    public static void main(String[] args) {
         Resume r1 = new Resume();
         r1.setUuid("uuid1");
         Resume r2 = new Resume();
@@ -37,12 +38,13 @@ public class MainTestArrayStorage {
         printAll();
         ARRAY_STORAGE.clear();
         printAll();
+        ARRAY_STORAGE.update(r4);
 
 
         System.out.println("Size: " + ARRAY_STORAGE.size());
     }
 
-    static void printAll(){
+    static void printAll() {
         System.out.println("\nGet All");
 
         try {
@@ -50,7 +52,6 @@ public class MainTestArrayStorage {
                 System.out.println(r);
             }
         } catch (NullPointerException e) {
-            System.out.println("Массив пуст, печатать нечего!");
         }
 
     }
