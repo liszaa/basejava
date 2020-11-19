@@ -13,7 +13,7 @@ public class ArrayStorage {
 
     //do not forget to change this variable in new methods that change amount of real resumes!
     private int amountOfResumes = 0;
-    private int RESUME_NOT_FOUND = -1;
+    private final static int RESUME_NOT_FOUND = -1;
 
     public void clear() {
         Arrays.fill(storage, 0, amountOfResumes, null);
@@ -21,10 +21,10 @@ public class ArrayStorage {
     }
 
     public void save(Resume resume) {
-        if ((findResumeIndex(resume.getUuid())) != RESUME_NOT_FOUND) {
-            System.out.println("Method save: Резюме(" + resume.getUuid() + ") не может быть добавлено в список (резюме уже есть в списке\n");
-        } else if (amountOfResumes >= storage.length) {
+        if (amountOfResumes >= storage.length) {
             System.out.println("Method save: Резюме(" + resume.getUuid() + ") не может быть добавлено в список (нет места в storage)\n");
+        } else if (findResumeIndex(resume.getUuid()) != RESUME_NOT_FOUND) {
+            System.out.println("Method save: Резюме(" + resume.getUuid() + ") не может быть добавлено в список (резюме уже есть в списке\n");
         } else {
             storage[amountOfResumes] = resume;
             amountOfResumes++;
