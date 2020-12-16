@@ -36,8 +36,7 @@ public class MainArray {
                     System.out.println(ARRAY_STORAGE.size());
                     break;
                 case "save":
-                    r = new Resume();
-                    r.setUuid(uuid);
+                    r = new Resume(uuid);
                     ARRAY_STORAGE.save(r);
                     printAll();
                     break;
@@ -61,7 +60,7 @@ public class MainArray {
         }
     }
 
-    static void printAll() {
+    private static void printAll() {
         Resume[] all = ARRAY_STORAGE.getAll();
         System.out.println("----------------------------");
         if (all.length == 0) {
