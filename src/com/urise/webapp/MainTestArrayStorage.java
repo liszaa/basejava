@@ -75,40 +75,6 @@ public class MainTestArrayStorage {
         ARRAY_STORAGE.save(resume5);
         System.out.println(ARRAY_STORAGE.size());
         printAll(ARRAY_STORAGE);
-
-
-//        Resume r1 = new Resume();
-//        r1.setUuid("uuid1");
-//        Resume r2 = new Resume();
-//        r2.setUuid(null);
-//        Resume r3 = new Resume();
-//        r3.setUuid("uuid3");
-//
-//
-//        ARRAY_STORAGE.save(r1);
-//        ARRAY_STORAGE.save(r2);
-//        ARRAY_STORAGE.save(r3);
-//
-//        System.out.println("Get r1: " + ARRAY_STORAGE.get(r1.getUuid()));
-//        System.out.println("Size: " + ARRAY_STORAGE.size());
-//
-//        System.out.println("Get dummy: " + ARRAY_STORAGE.get("dummy"));
-//
-//        ARRAY_STORAGE.save(r1);
-//        Resume r4 = new Resume();
-//        System.out.println(r4.getUuid());
-//        ARRAY_STORAGE.delete(r4.getUuid());
-//        ARRAY_STORAGE.get(r4.getUuid());
-//
-//        printAll();
-//        ARRAY_STORAGE.delete(r1.getUuid());
-//        printAll();
-//        ARRAY_STORAGE.clear();
-//        printAll();
-//        ARRAY_STORAGE.update(r4);
-//
-//
-//        System.out.println("Size: " + ARRAY_STORAGE.size());
     }
 
     private static void printAll(AbstractArrayStorage storage) {
