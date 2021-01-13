@@ -6,21 +6,24 @@ import java.util.Arrays;
 
 public class SortedArrayStorage extends AbstractArrayStorage {
 
-
-    protected int getIndex(String uuid) {
-        Resume searchKey = new Resume(uuid);
+    public Object getKeyFor(Resume r) {
+        Resume searchKey = new Resume(r.getUuid());
         return Arrays.binarySearch(storage, 0, size, searchKey);
     }
 
-    public void insert(Resume r, int index) {
-        int insertIndex = -index - 1;
-        System.arraycopy(storage, insertIndex, storage, insertIndex + 1, size - insertIndex);
-        storage[insertIndex] = r;
+    public void insert(Resume r, Object k) {
+        int key = (Integer) k;
+        int insertKey = -key - 1;
+        System.arraycopy(storage, insertKey, storage, insertKey + 1, size - insertKey);
+        storage[insertKey] = r;
+        size++;
     }
 
-    public void deleteElement(int index) {
-        System.arraycopy(storage, index + 1, storage, index, size - index - 1);
+    public void deleteElement(Object objectKey) {
+        int key = (Integer) objectKey;
+        System.arraycopy(storage, key + 1, storage, key, size - key - 1);
+        size--;
     }
-
 }
+
 

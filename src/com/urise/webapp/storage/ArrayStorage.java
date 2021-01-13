@@ -4,23 +4,29 @@ import com.urise.webapp.model.Resume;
 
 public class ArrayStorage extends AbstractArrayStorage {
 
+    public int size() {
+        return size;
+    }
 
-    protected int getIndex(String uuid) {
+    public Object getKeyFor(Resume r) {
         for (int i = 0; i < size; i++) {
-            if (uuid.equals(storage[i].getUuid())) {
+            if (r.getUuid().equals(storage[i].getUuid())) {
                 return i;
             }
         }
         return -1;
     }
 
-    public void insert(Resume r, int index) {
+    public void insert(Resume r, Object k) {
         int insertIndex = size;
         storage[insertIndex] = r;
+        size++;
     }
 
-    public void deleteElement(int index) {
-        storage[index] = storage[size - 1];
+    public void deleteElement(Object objectKey) {
+        int key = (Integer) objectKey;
+        storage[key] = storage[size - 1];
+        size--;
     }
 
 
