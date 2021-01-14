@@ -1,0 +1,62 @@
+package com.urise.webapp.storage;
+
+import com.urise.webapp.Exception.ExistStorageException;
+import com.urise.webapp.Exception.NotExistStorageException;
+import com.urise.webapp.Exception.StorageException;
+import com.urise.webapp.model.Resume;
+
+public abstract class AbstractStorage implements Storage {
+
+    public void update(Resume r) {
+        Object key = getKeyFor(r);
+        if (objectAlreadyExistsFor(key)) {
+            setObjectForKey(r, key);
+        } else {
+            throw new NotExistStorageException(r.getUuid());
+        }
+    }
+
+    public void save(Resume r) {
+        Object key = getKeyFor(r);
+        if (objectAlreadyExistsFor(key)) {
+            throw new ExistStorageException(r.getUuid());
+        } else if (!hasMoreSpace()) {
+            throw new StorageException("Storage overflow", r.getUuid());
+        } else {
+            insert(r, key);
+
+        }
+    }
+
+    public void delete(String uuid) {
+        if (getResume(uuid) == null) {
+            throw new NotExistStorageException(uuid);
+        } else {
+            Object key = getKeyFor(getResume(uuid));
+            deleteElement(key);
+        }
+    }
+
+    public Resume getResume(String uuid) {
+        return get(uuid);
+    }
+
+    public abstract void insert(Resume r, Object k); //+
+
+    public abstract boolean hasMoreSpace(); //+
+
+    public abstract Object getKeyFor(Resume r); //+
+
+    public abstract boolean objectAlreadyExistsFor(Object key);
+
+    public abstract void setObjectForKey(Resume r, Object k);
+
+    public abstract int size();
+
+    public abstract void clear();
+
+    public abstract void deleteElement(Object objectKey);
+
+    public abstract Resume[] getAll();
+
+}
