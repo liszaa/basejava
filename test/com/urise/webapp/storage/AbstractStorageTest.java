@@ -20,7 +20,7 @@ public abstract class AbstractStorageTest {
     private Resume resume3 = new Resume();
 
 
-    AbstractStorageTest(Storage storage) {
+    public AbstractStorageTest(Storage storage) {
         this.storage = storage;
     }
 
