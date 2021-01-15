@@ -13,14 +13,14 @@ import com.urise.webapp.model.Resume;
 
 public abstract class AbstractStorageTest {
 
-    public Storage storage;
+    private Storage storage;
 
     private Resume resume1 = new Resume();
     private Resume resume2 = new Resume();
     private Resume resume3 = new Resume();
 
 
-    public AbstractStorageTest(Storage storage) {
+    AbstractStorageTest(Storage storage) {
         this.storage = storage;
     }
 
