@@ -2,15 +2,17 @@ package com.urise.webapp.storage;
 
 import com.urise.webapp.model.Resume;
 
+import java.util.Iterator;
+
 public class ArrayStorage extends AbstractArrayStorage {
 
     public int size() {
         return size;
     }
 
-    public Object getKeyFor(Resume r) {
+    public Object getKeyFor(String uuid) {
         for (int i = 0; i < size; i++) {
-            if (r.getUuid().equals(storage[i].getUuid())) {
+            if (uuid.equals(storage[i].getUuid())) {
                 return i;
             }
         }
@@ -28,6 +30,5 @@ public class ArrayStorage extends AbstractArrayStorage {
         storage[key] = storage[size - 1];
         size--;
     }
-
 
 }

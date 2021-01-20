@@ -2,6 +2,7 @@ package com.urise.webapp.storage;
 
 import com.urise.webapp.model.Resume;
 
+import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -10,17 +11,17 @@ public class ListStorage extends AbstractStorage {
     private List<Resume> storage = new LinkedList<>();
 
     public int size() {
-        return size();
+        return storage.size();
     }
 
     public void clear() {
         storage.clear();
     }
 
-    public Integer getKeyFor(Resume r) {
+    public Integer getKeyFor(String uuid) {
         int index = 0;
         for (Resume resume : storage) {
-            if (r.getUuid().equals(resume.getUuid())) {
+            if (resume.getUuid().equals(uuid)) {
                 return index;
             } else {
                 index ++;
@@ -44,11 +45,10 @@ public class ListStorage extends AbstractStorage {
     }
 
     public  void insert(Resume r, Object objectKey) {
-        int key = (Integer) objectKey;
-        storage.add(key, r);
+        storage.add(r);
     }
 
-    public Resume get(String uuid) {
+    public Resume getResume(String uuid) {
         for (Resume r : storage) {
             if (r.getUuid().equals(uuid)) {
                 return r;
@@ -66,8 +66,6 @@ public class ListStorage extends AbstractStorage {
     public Resume[] getAll() {
         return  storage.toArray(new Resume[storage.size()]);
     }
-
-
 
 
 //

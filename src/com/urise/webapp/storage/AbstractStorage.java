@@ -8,7 +8,7 @@ import com.urise.webapp.model.Resume;
 public abstract class AbstractStorage implements Storage {
 
     public void update(Resume r) {
-        Object key = getKeyFor(r);
+        Object key = getKeyFor(r.getUuid());
         if (objectAlreadyExistsFor(key)) {
             setObjectForKey(r, key);
         } else {
@@ -17,7 +17,7 @@ public abstract class AbstractStorage implements Storage {
     }
 
     public void save(Resume r) {
-        Object key = getKeyFor(r);
+        Object key = getKeyFor(r.getUuid());
         if (objectAlreadyExistsFor(key)) {
             throw new ExistStorageException(r.getUuid());
         } else if (!hasMoreSpace()) {
@@ -32,20 +32,25 @@ public abstract class AbstractStorage implements Storage {
         if (getResume(uuid) == null) {
             throw new NotExistStorageException(uuid);
         } else {
-            Object key = getKeyFor(getResume(uuid));
+            Object key = getKeyFor(uuid);
             deleteElement(key);
         }
     }
 
-    public Resume getResume(String uuid) {
-        return get(uuid);
+    public Resume get(String uuid) {
+        Object key = getKeyFor(uuid);
+        if (objectAlreadyExistsFor(key)) {
+            return getResume(uuid);
+        } else {
+            throw new NotExistStorageException(uuid);
+        }
     }
 
     public abstract void insert(Resume r, Object k); //+
 
     public abstract boolean hasMoreSpace(); //+
 
-    public abstract Object getKeyFor(Resume r); //+
+    public abstract Object getKeyFor(String uuid); //+
 
     public abstract boolean objectAlreadyExistsFor(Object key);
 
@@ -58,5 +63,9 @@ public abstract class AbstractStorage implements Storage {
     public abstract void deleteElement(Object objectKey);
 
     public abstract Resume[] getAll();
+
+    public abstract Resume getResume(String uuid);
+
+
 
 }

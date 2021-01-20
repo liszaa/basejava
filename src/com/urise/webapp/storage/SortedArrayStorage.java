@@ -3,11 +3,12 @@ package com.urise.webapp.storage;
 import com.urise.webapp.model.Resume;
 
 import java.util.Arrays;
+import java.util.Iterator;
 
 public class SortedArrayStorage extends AbstractArrayStorage {
 
-    public Object getKeyFor(Resume r) {
-        Resume searchKey = new Resume(r.getUuid());
+    public Object getKeyFor(String uuid) {
+        Resume searchKey = new Resume(uuid);
         return Arrays.binarySearch(storage, 0, size, searchKey);
     }
 
@@ -25,5 +26,3 @@ public class SortedArrayStorage extends AbstractArrayStorage {
         size--;
     }
 }
-
-

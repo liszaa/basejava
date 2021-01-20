@@ -25,7 +25,7 @@ public abstract class AbstractArrayStorage extends AbstractStorage {
     }
 
     @Override
-    public Resume get(String uuid) {
+    public Resume getResume(String uuid) {
         for (int i = 0; i < size; i++) {
             if (storage[i].getUuid().equals(uuid)) {
                 return storage[i];
@@ -45,7 +45,7 @@ public abstract class AbstractArrayStorage extends AbstractStorage {
     }
 
     public boolean hasMoreSpace() {
-        return size >= STORAGE_LIMIT;
+        return size < STORAGE_LIMIT;
     }
 
     public abstract void deleteElement(Object objectKey);
