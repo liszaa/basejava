@@ -7,6 +7,7 @@ import com.urise.webapp.model.Resume;
 
 public abstract class AbstractStorage implements Storage {
 
+    @Override
     public void update(Resume r) {
         Object key = getKeyFor(r.getUuid());
         if (objectAlreadyExistsFor(key)) {
@@ -16,6 +17,7 @@ public abstract class AbstractStorage implements Storage {
         }
     }
 
+    @Override
     public void save(Resume r) {
         Object key = getKeyFor(r.getUuid());
         if (objectAlreadyExistsFor(key)) {
@@ -24,10 +26,10 @@ public abstract class AbstractStorage implements Storage {
             throw new StorageException("Storage overflow", r.getUuid());
         } else {
             insert(r, key);
-
         }
     }
 
+    @Override
     public void delete(String uuid) {
         if (getResume(uuid) == null) {
             throw new NotExistStorageException(uuid);
@@ -37,6 +39,7 @@ public abstract class AbstractStorage implements Storage {
         }
     }
 
+    @Override
     public Resume get(String uuid) {
         Object key = getKeyFor(uuid);
         if (objectAlreadyExistsFor(key)) {
@@ -56,13 +59,7 @@ public abstract class AbstractStorage implements Storage {
 
     public abstract void setObjectForKey(Resume r, Object k);
 
-    public abstract int size();
-
-    public abstract void clear();
-
     public abstract void deleteElement(Object objectKey);
-
-    public abstract Resume[] getAll();
 
     public abstract Resume getResume(String uuid);
 

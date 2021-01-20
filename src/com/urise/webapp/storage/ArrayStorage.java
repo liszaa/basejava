@@ -10,6 +10,7 @@ public class ArrayStorage extends AbstractArrayStorage {
         return size;
     }
 
+    @Override
     public Object getKeyFor(String uuid) {
         for (int i = 0; i < size; i++) {
             if (uuid.equals(storage[i].getUuid())) {
@@ -19,12 +20,14 @@ public class ArrayStorage extends AbstractArrayStorage {
         return -1;
     }
 
+    @Override
     public void insert(Resume r, Object k) {
         int insertIndex = size;
         storage[insertIndex] = r;
         size++;
     }
 
+    @Override
     public void deleteElement(Object objectKey) {
         int key = (Integer) objectKey;
         storage[key] = storage[size - 1];

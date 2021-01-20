@@ -7,11 +7,13 @@ import java.util.Iterator;
 
 public class SortedArrayStorage extends AbstractArrayStorage {
 
+    @Override
     public Object getKeyFor(String uuid) {
         Resume searchKey = new Resume(uuid);
         return Arrays.binarySearch(storage, 0, size, searchKey);
     }
 
+    @Override
     public void insert(Resume r, Object k) {
         int key = (Integer) k;
         int insertKey = -key - 1;
@@ -20,6 +22,7 @@ public class SortedArrayStorage extends AbstractArrayStorage {
         size++;
     }
 
+    @Override
     public void deleteElement(Object objectKey) {
         int key = (Integer) objectKey;
         System.arraycopy(storage, key + 1, storage, key, size - key - 1);

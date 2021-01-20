@@ -10,14 +10,17 @@ public class ListStorage extends AbstractStorage {
 
     private List<Resume> storage = new LinkedList<>();
 
+    @Override
     public int size() {
         return storage.size();
     }
 
+    @Override
     public void clear() {
         storage.clear();
     }
 
+    @Override
     public Integer getKeyFor(String uuid) {
         int index = 0;
         for (Resume resume : storage) {
@@ -30,20 +33,24 @@ public class ListStorage extends AbstractStorage {
         return -1;
     }
 
+    @Override
     public  boolean objectAlreadyExistsFor(Object objectKey) {
         int key = (Integer) objectKey;
         return key >= 0;
     }
 
+    @Override
     public void setObjectForKey(Resume r, Object objectKey) {
         int key = (Integer) objectKey;
         storage.set(key, r);
     }
 
+    @Override
     public  boolean hasMoreSpace() {
         return true;
     }
 
+    @Override
     public  void insert(Resume r, Object objectKey) {
         storage.add(r);
     }
@@ -57,40 +64,15 @@ public class ListStorage extends AbstractStorage {
         return null;
     }
 
+    @Override
     public void deleteElement(Object objectKey) {
         int key = (Integer) objectKey;
         Resume resume = storage.get(key);
         storage.remove(resume);
     }
 
+    @Override
     public Resume[] getAll() {
         return  storage.toArray(new Resume[storage.size()]);
     }
-
-
-//
-//    @Override
-//    public int size() {
-//        return 0;
-//    }
-//
-//    @Override
-//    public void clear() {
-//
-//    }
-//
-//    @Override
-//    public Resume get(String uuid) {
-//        return null;
-//    }
-//
-//    @Override
-//    public void delete(String uuid) {
-//
-//    }
-//
-//    @Override
-//    public Resume[] getAll() {
-//        return new Resume[0];
-//    }
 }
