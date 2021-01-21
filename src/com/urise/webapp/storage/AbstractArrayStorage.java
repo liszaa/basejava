@@ -27,13 +27,8 @@ public abstract class AbstractArrayStorage extends AbstractStorage {
     }
 
     @Override
-    public Resume getResume(String uuid) {
-        for (int i = 0; i < size; i++) {
-            if (storage[i].getUuid().equals(uuid)) {
-                return storage[i];
-            }
-        }
-        return null;
+    public Resume getResume(Object objectKey) {
+        return storage[(Integer) objectKey];
     }
 
     @Override

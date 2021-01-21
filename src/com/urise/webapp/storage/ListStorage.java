@@ -55,13 +55,8 @@ public class ListStorage extends AbstractStorage {
         storage.add(r);
     }
 
-    public Resume getResume(String uuid) {
-        for (Resume r : storage) {
-            if (r.getUuid().equals(uuid)) {
-                return r;
-            }
-        }
-        return null;
+    public Resume getResume(Object objectKey) {
+        return storage.get((Integer) objectKey);
     }
 
     @Override

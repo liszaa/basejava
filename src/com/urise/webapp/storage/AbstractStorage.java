@@ -31,8 +31,8 @@ public abstract class AbstractStorage implements Storage {
 
     @Override
     public Resume get(String uuid) {
-        getExistedKeyFor(uuid);
-        return getResume(uuid);
+        Object key = getExistedKeyFor(uuid);
+        return getResume(key);
     }
 
     private Object getExistedKeyFor(String uuid) {
@@ -63,7 +63,7 @@ public abstract class AbstractStorage implements Storage {
 
     public abstract void deleteElement(Object objectKey);
 
-    public abstract Resume getResume(String uuid);
+    public abstract Resume getResume(Object objectKey);
 
 
 
