@@ -9,20 +9,14 @@ public abstract class AbstractStorage implements Storage {
 
     @Override
     public void update(Resume r) {
-        Object key = getKeyFor(r.getUuid());
-        if (objectAlreadyExistsFor(key)) {
-            setObjectForKey(r, key);
-        } else {
-            throw new NotExistStorageException(r.getUuid());
-        }
+        Object key = getExistedKeyFor(r.getUuid());
+        setObjectForKey(r, key);
     }
 
     @Override
     public void save(Resume r) {
-        Object key = getKeyFor(r.getUuid());
-        if (objectAlreadyExistsFor(key)) {
-            throw new ExistStorageException(r.getUuid());
-        } else if (!hasMoreSpace()) {
+        Object key = getNotExistedKeyFor(r.getUuid());
+        if (!hasMoreSpace()) {
             throw new StorageException("Storage overflow", r.getUuid());
         } else {
             insert(r, key);
@@ -31,22 +25,30 @@ public abstract class AbstractStorage implements Storage {
 
     @Override
     public void delete(String uuid) {
-        if (getResume(uuid) == null) {
-            throw new NotExistStorageException(uuid);
-        } else {
-            Object key = getKeyFor(uuid);
-            deleteElement(key);
-        }
+        Object key = getExistedKeyFor(uuid);
+        deleteElement(key);
     }
 
     @Override
     public Resume get(String uuid) {
+        getExistedKeyFor(uuid);
+        return getResume(uuid);
+    }
+
+    private Object getExistedKeyFor(String uuid) {
         Object key = getKeyFor(uuid);
-        if (objectAlreadyExistsFor(key)) {
-            return getResume(uuid);
-        } else {
+        if (!objectAlreadyExistsFor(key)) {
             throw new NotExistStorageException(uuid);
         }
+        return key;
+    }
+
+    private Object getNotExistedKeyFor(String uuid) {
+        Object key = getKeyFor(uuid);
+        if (objectAlreadyExistsFor(key)) {
+            throw new ExistStorageException(uuid);
+        }
+        return key;
     }
 
     public abstract void insert(Resume r, Object k); //+
@@ -62,6 +64,8 @@ public abstract class AbstractStorage implements Storage {
     public abstract void deleteElement(Object objectKey);
 
     public abstract Resume getResume(String uuid);
+
+
 
 
 

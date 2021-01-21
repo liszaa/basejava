@@ -54,7 +54,5 @@ public abstract class AbstractArrayStorage extends AbstractStorage {
     }
 
     public abstract void deleteElement(Object objectKey);
-
-
 }
 
