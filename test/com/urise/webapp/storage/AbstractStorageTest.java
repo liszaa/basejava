@@ -19,9 +19,9 @@ public abstract class AbstractStorageTest {
 
     Storage storage;
 
-    Resume resume1 = new Resume();
-    Resume resume2 = new Resume();
-    Resume resume3 = new Resume();
+    Resume resume1 = new Resume("Илья");
+    Resume resume2 = new Resume("Илья");
+    Resume resume3 = new Resume("Максим");
 
 
     AbstractStorageTest(Storage storage) {
@@ -56,13 +56,13 @@ public abstract class AbstractStorageTest {
 
     @Test(expected = NotExistStorageException.class)
     public void testUpdateNotExistResume() {
-        Resume resume4 = new Resume();
+        Resume resume4 = new Resume("Лиза");
         storage.update(resume4);
     }
 
     @Test
     public void testSaveResume() {
-        Resume resume4 = new Resume();
+        Resume resume4 = new Resume("Лиза");
         storage.save(resume4);
         try {
             storage.get(resume4.getUuid());
@@ -87,7 +87,7 @@ public abstract class AbstractStorageTest {
 
     @Test(expected = NotExistStorageException.class)
     public void testDeleteNotExistResume() {
-        storage.delete(new Resume().getUuid());
+        storage.delete(new Resume("Лиза").getUuid());
     }
 
     @Test
@@ -97,21 +97,8 @@ public abstract class AbstractStorageTest {
 
     @Test(expected = NotExistStorageException.class)
     public void testGetNotExistResume() {
-        storage.get(new Resume().getUuid());
+        storage.get(new Resume("Лиза").getUuid());
     }
-
-    @Test(expected = StorageException.class)
-    public void testStorageOverflow() {
-        for (int i = storage.size() + 1; i < AbstractArrayStorage.STORAGE_LIMIT + 1; i++) {
-            try {
-                storage.save(new Resume());
-            } catch (StorageException e) {
-                Assert.fail("The array overflowed ahead of time");
-            }
-        }
-        storage.save(new Resume());
-    }
-
     @Test
     public void testGetAll() {
         List<Resume> expected = Arrays.asList(resume1, resume2, resume3);
