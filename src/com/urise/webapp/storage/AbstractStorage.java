@@ -18,7 +18,7 @@ public abstract class AbstractStorage implements Storage {
 
     @Override
     public void save(Resume r) {
-        Object key = getNotExistedKeyFor(r.getUuid());
+        Object key = getNotExistedKeyFor(r.getUuid()); //34567838
         insert(r, key);
     }
 
@@ -29,7 +29,7 @@ public abstract class AbstractStorage implements Storage {
     }
 
     @Override
-    public Resume get(String uuid) {
+    public Resume get(String uuid) {//578473745835973749785(есть в сторадже)
         Object key = getExistedKeyFor(uuid);
         return getResume(key);
     }
@@ -43,8 +43,8 @@ public abstract class AbstractStorage implements Storage {
     }
 
     private Object getNotExistedKeyFor(String uuid) {
-        Object key = getKeyFor(uuid);//uuid
-        if (objectAlreadyExistsFor(key)) { //передаю null
+        Object key = getKeyFor(uuid);//resume
+        if (objectAlreadyExistsFor(key)) { //передаю resume
             throw new ExistStorageException(uuid);
         }
         return key;
