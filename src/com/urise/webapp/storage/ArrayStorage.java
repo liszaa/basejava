@@ -11,7 +11,7 @@ public class ArrayStorage extends AbstractArrayStorage {
     }
 
     @Override
-    public Object getKeyFor(String uuid) {
+    public Integer getKeyFor(String uuid) {
         for (int i = 0; i < size; i++) {
             if (uuid.equals(storage[i].getUuid())) {
                 return i;
@@ -21,7 +21,7 @@ public class ArrayStorage extends AbstractArrayStorage {
     }
 
     @Override
-    public void saveResume(Resume r, Object k) {
+    public void saveResume(Resume r, Integer k) {
         storage[size] = r;
     }
 

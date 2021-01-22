@@ -7,7 +7,7 @@ import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
 
-public class ListStorage extends AbstractStorage {
+public class ListStorage extends AbstractStorage<Integer> {
 
     private List<Resume> storage = new LinkedList<>();
 
@@ -35,31 +35,29 @@ public class ListStorage extends AbstractStorage {
     }
 
     @Override
-    public  boolean objectAlreadyExistsFor(Object objectKey) {
-        int key = (Integer) objectKey;
+    public  boolean objectAlreadyExistsFor(Integer objectKey) {
+        int key = objectKey;
         return key >= 0;
     }
 
     @Override
-    public void setObjectForKey(Resume r, Object objectKey) {
-        int key = (Integer) objectKey;
-        storage.set(key, r);
+    public void setObjectForKey(Resume r, Integer objectKey) {
+        storage.set(objectKey, r);
     }
 
 
     @Override
-    public  void insert(Resume r, Object objectKey) {
+    public  void insert(Resume r, Integer objectKey) {
         storage.add(r);
     }
 
-    public Resume getResume(Object objectKey) {
-        return storage.get((Integer) objectKey);
+    public Resume getResume(Integer objectKey) {
+        return storage.get(objectKey);
     }
 
     @Override
-    public void deleteElement(Object objectKey) {
-        int key = (Integer) objectKey;
-        Resume resume = storage.get(key);
+    public void deleteElement(Integer objectKey) {
+        Resume resume = storage.get(objectKey);
         storage.remove(resume);
     }
 

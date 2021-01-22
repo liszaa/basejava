@@ -8,42 +8,42 @@ import com.urise.webapp.model.Resume;
 import java.util.Collections;
 import java.util.List;
 
-public abstract class AbstractStorage implements Storage {
+public abstract class AbstractStorage<K> implements Storage {
 
     @Override
     public void update(Resume r) {
-        Object key = getExistedKeyFor(r.getUuid());
+        K key = getExistedKeyFor(r.getUuid());
         setObjectForKey(r, key);
     }
 
     @Override
     public void save(Resume r) {
-        Object key = getNotExistedKeyFor(r.getUuid()); //34567838
+        K key = getNotExistedKeyFor(r.getUuid());
         insert(r, key);
     }
 
     @Override
     public void delete(String uuid) {
-        Object key = getExistedKeyFor(uuid);
+        K key = getExistedKeyFor(uuid);
         deleteElement(key);
     }
 
     @Override
-    public Resume get(String uuid) {//578473745835973749785(есть в сторадже)
-        Object key = getExistedKeyFor(uuid);
+    public Resume get(String uuid) {
+        K key = getExistedKeyFor(uuid);
         return getResume(key);
     }
 
-    private Object getExistedKeyFor(String uuid) {
-        Object key = getKeyFor(uuid);
+    private K getExistedKeyFor(String uuid) {
+        K key = getKeyFor(uuid);
         if (!objectAlreadyExistsFor(key)) {
             throw new NotExistStorageException(uuid);
         }
         return key;
     }
 
-    private Object getNotExistedKeyFor(String uuid) {
-        Object key = getKeyFor(uuid);//resume
+    private K getNotExistedKeyFor(String uuid) {
+        K key = getKeyFor(uuid);//resume
         if (objectAlreadyExistsFor(key)) { //передаю resume
             throw new ExistStorageException(uuid);
         }
@@ -58,17 +58,17 @@ public abstract class AbstractStorage implements Storage {
 
     protected abstract List<Resume> getAll();
 
-    public abstract void insert(Resume r, Object k); //+
+    public abstract void insert(Resume r, K k); //+
 
-    public abstract Object getKeyFor(String uuid); //+
+    public abstract K getKeyFor(String uuid); //+
 
-    public abstract boolean objectAlreadyExistsFor(Object key);
+    public abstract boolean objectAlreadyExistsFor(K key);
 
-    public abstract void setObjectForKey(Resume r, Object k);
+    public abstract void setObjectForKey(Resume r, K k);
 
-    public abstract void deleteElement(Object objectKey);
+    public abstract void deleteElement(K objectKey);
 
-    public abstract Resume getResume(Object objectKey);
+    public abstract Resume getResume(K objectKey);
 
 
 

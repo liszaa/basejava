@@ -11,15 +11,14 @@ public class SortedArrayStorage extends AbstractArrayStorage {
     private static final Comparator<Resume> RESUME_COMPARATOR = Comparator.comparing(Resume::getUuid);
 
     @Override
-    public Object getKeyFor(String uuid) {//578473745835973749785(есть в сторадже)
+    public Integer getKeyFor(String uuid) {//578473745835973749785(есть в сторадже)
         Resume searchKey = new Resume(uuid, "searchKey");
         return Arrays.binarySearch(storage, 0, size, searchKey, RESUME_COMPARATOR);
     }
 
     @Override
-    public void saveResume(Resume r, Object k) {
-        int key = (Integer) k;
-        int insertKey = -key - 1;
+    public void saveResume(Resume r, Integer k) {
+        int insertKey = -k - 1;
         System.arraycopy(storage, insertKey, storage, insertKey + 1, size - insertKey);
         storage[insertKey] = r;
     }
@@ -27,6 +26,5 @@ public class SortedArrayStorage extends AbstractArrayStorage {
     @Override
     public void deleteResume(int key) {
         System.arraycopy(storage, key + 1, storage, key, size - key - 1);
-
     }
 }
