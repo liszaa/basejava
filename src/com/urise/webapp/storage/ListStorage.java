@@ -2,6 +2,7 @@ package com.urise.webapp.storage;
 
 import com.urise.webapp.model.Resume;
 
+import java.util.Collections;
 import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
@@ -45,10 +46,6 @@ public class ListStorage extends AbstractStorage {
         storage.set(key, r);
     }
 
-    @Override
-    public  boolean hasMoreSpace() {
-        return true;
-    }
 
     @Override
     public  void insert(Resume r, Object objectKey) {
@@ -67,7 +64,7 @@ public class ListStorage extends AbstractStorage {
     }
 
     @Override
-    public Resume[] getAll() {
-        return  storage.toArray(new Resume[storage.size()]);
+    public List<Resume> getAll() {
+        return storage;
     }
 }

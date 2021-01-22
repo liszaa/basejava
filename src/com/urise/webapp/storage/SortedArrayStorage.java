@@ -14,18 +14,16 @@ public class SortedArrayStorage extends AbstractArrayStorage {
     }
 
     @Override
-    public void insert(Resume r, Object k) {
+    public void saveResume(Resume r, Object k) {
         int key = (Integer) k;
         int insertKey = -key - 1;
         System.arraycopy(storage, insertKey, storage, insertKey + 1, size - insertKey);
         storage[insertKey] = r;
-        size++;
     }
 
     @Override
-    public void deleteElement(Object objectKey) {
-        int key = (Integer) objectKey;
+    public void deleteResume(int key) {
         System.arraycopy(storage, key + 1, storage, key, size - key - 1);
-        size--;
+
     }
 }

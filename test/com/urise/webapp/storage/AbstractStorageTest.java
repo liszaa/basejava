@@ -11,6 +11,10 @@ import com.urise.webapp.Exception.NotExistStorageException;
 import com.urise.webapp.Exception.StorageException;
 import com.urise.webapp.model.Resume;
 
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.List;
+
 public abstract class AbstractStorageTest {
 
     Storage storage;
@@ -110,8 +114,8 @@ public abstract class AbstractStorageTest {
 
     @Test
     public void testGetAll() {
-        Resume[] expected = new Resume[]{resume1, resume2, resume3};
-        Assert.assertArrayEquals(expected, storage.getAll());
+        List<Resume> expected = Arrays.asList(resume1, resume2, resume3);
+        Collections.sort(expected);
+        Assert.assertEquals(expected, storage.getAllSorted());
     }
-
 }

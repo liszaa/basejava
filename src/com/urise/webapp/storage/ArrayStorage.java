@@ -21,17 +21,13 @@ public class ArrayStorage extends AbstractArrayStorage {
     }
 
     @Override
-    public void insert(Resume r, Object k) {
-        int insertIndex = size;
-        storage[insertIndex] = r;
-        size++;
+    public void saveResume(Resume r, Object k) {
+        storage[size] = r;
     }
 
     @Override
-    public void deleteElement(Object objectKey) {
-        int key = (Integer) objectKey;
+    public void deleteResume(int key) {
         storage[key] = storage[size - 1];
-        size--;
     }
 
 }

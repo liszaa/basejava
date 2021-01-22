@@ -5,6 +5,9 @@ import com.urise.webapp.Exception.NotExistStorageException;
 import com.urise.webapp.Exception.StorageException;
 import com.urise.webapp.model.Resume;
 
+import java.util.Collections;
+import java.util.List;
+
 public abstract class AbstractStorage implements Storage {
 
     @Override
@@ -16,11 +19,7 @@ public abstract class AbstractStorage implements Storage {
     @Override
     public void save(Resume r) {
         Object key = getNotExistedKeyFor(r.getUuid());
-        if (!hasMoreSpace()) {
-            throw new StorageException("Storage overflow", r.getUuid());
-        } else {
-            insert(r, key);
-        }
+        insert(r, key);
     }
 
     @Override
@@ -44,16 +43,22 @@ public abstract class AbstractStorage implements Storage {
     }
 
     private Object getNotExistedKeyFor(String uuid) {
-        Object key = getKeyFor(uuid);
-        if (objectAlreadyExistsFor(key)) {
+        Object key = getKeyFor(uuid);//uuid
+        if (objectAlreadyExistsFor(key)) { //передаю null
             throw new ExistStorageException(uuid);
         }
         return key;
     }
 
-    public abstract void insert(Resume r, Object k); //+
+    public List<Resume> getAllSorted() {
+        List<Resume> list = getAll();
+        Collections.sort(list);
+        return list;
+    }
 
-    public abstract boolean hasMoreSpace(); //+
+    protected abstract List<Resume> getAll();
+
+    public abstract void insert(Resume r, Object k); //+
 
     public abstract Object getKeyFor(String uuid); //+
 
