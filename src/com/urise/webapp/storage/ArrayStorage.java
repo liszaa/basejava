@@ -6,10 +6,6 @@ import java.util.Iterator;
 
 public class ArrayStorage extends AbstractArrayStorage {
 
-    public int size() {
-        return size;
-    }
-
     @Override
     public Integer getKeyFor(String uuid) {
         for (int i = 0; i < size; i++) {
@@ -21,7 +17,7 @@ public class ArrayStorage extends AbstractArrayStorage {
     }
 
     @Override
-    public void saveResume(Resume r, Integer k) {
+    public void saveResume(Resume r, Integer key) {
         storage[size] = r;
     }
 

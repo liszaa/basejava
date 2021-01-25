@@ -4,7 +4,7 @@ import com.urise.webapp.model.Resume;
 
 import java.util.*;
 
-public class MapUUIDStorage extends AbstractStorage<String> {
+public class MapUuidStorage extends AbstractStorage<String> {
 
     private Map<String, Resume> storage = new HashMap<>();
 
@@ -24,8 +24,8 @@ public class MapUUIDStorage extends AbstractStorage<String> {
     }
 
     @Override
-    public void setObjectForKey(Resume r, String k) {
-        storage.put(k, r);
+    public void updateResume(Resume r, String k) {
+        insert(r, k);
     }
 
     @Override

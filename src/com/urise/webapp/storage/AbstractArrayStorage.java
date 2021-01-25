@@ -25,7 +25,7 @@ public abstract class AbstractArrayStorage extends AbstractStorage<Integer> {
 
     @Override
     public List<Resume> getAll() {
-        return Arrays.asList(Arrays.copyOfRange(storage, 0, size));
+        return Arrays.asList(Arrays.copyOf(storage, size));
     }
 
     @Override
@@ -35,33 +35,31 @@ public abstract class AbstractArrayStorage extends AbstractStorage<Integer> {
 
     @Override
     public boolean objectAlreadyExistsFor(Integer objectKey) {
-//        int key = objectKey;
         return objectKey >= 0;
     }
 
     @Override
-    public void setObjectForKey(Resume r, Integer objectKey) {
+    public void updateResume(Resume r, Integer objectKey) {
         storage[objectKey] = r;
     }
 
     @Override
-    public void insert(Resume r, Integer k) {
-        if (size() == STORAGE_LIMIT) {
+    public void insert(Resume r, Integer objectKey) {
+        if (size == STORAGE_LIMIT) {
             throw new StorageException("Storage overflow", r.getUuid());
-        } else {
-            saveResume(r, k);
-            size ++;
         }
+        saveResume(r, objectKey);
+        size ++;
     }
 
     public void deleteElement(Integer objectKey) {
-        int key = objectKey;
-        deleteResume(key);
+        deleteResume(objectKey);
+        storage[size - 1] = null;
         size--;
     }
 
     protected abstract void deleteResume(int objectKey);
 
-    public abstract void saveResume(Resume r, Integer k);
+    public abstract void saveResume(Resume r, Integer objectKey);
 }
 

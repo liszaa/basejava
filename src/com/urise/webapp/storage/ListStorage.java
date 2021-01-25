@@ -23,12 +23,9 @@ public class ListStorage extends AbstractStorage<Integer> {
 
     @Override
     public Integer getKeyFor(String uuid) {
-        int index = 0;
-        for (Resume resume : storage) {
-            if (resume.getUuid().equals(uuid)) {
-                return index;
-            } else {
-                index ++;
+        for (int i = 0; i < storage.size(); i ++) {
+            if (storage.get(i).getUuid().equals(uuid)) {
+                return i;
             }
         }
         return -1;
@@ -41,7 +38,7 @@ public class ListStorage extends AbstractStorage<Integer> {
     }
 
     @Override
-    public void setObjectForKey(Resume r, Integer objectKey) {
+    public void updateResume(Resume r, Integer objectKey) {
         storage.set(objectKey, r);
     }
 
