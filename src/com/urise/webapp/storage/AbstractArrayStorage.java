@@ -49,7 +49,7 @@ public abstract class AbstractArrayStorage extends AbstractStorage<Integer> {
             throw new StorageException("Storage overflow", r.getUuid());
         }
         saveResume(r, objectKey);
-        size ++;
+        size++;
     }
 
     public void deleteElement(Integer objectKey) {

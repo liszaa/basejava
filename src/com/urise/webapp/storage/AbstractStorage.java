@@ -81,7 +81,4 @@ public abstract class AbstractStorage<K> implements Storage {
     public abstract Resume getResume(K objectKey);
 
 
-
-
-
 }

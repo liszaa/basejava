@@ -2,8 +2,6 @@ package com.urise.webapp.storage;
 
 import com.urise.webapp.model.Resume;
 
-import java.util.Collections;
-import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -23,7 +21,7 @@ public class ListStorage extends AbstractStorage<Integer> {
 
     @Override
     public Integer getKeyFor(String uuid) {
-        for (int i = 0; i < storage.size(); i ++) {
+        for (int i = 0; i < storage.size(); i++) {
             if (storage.get(i).getUuid().equals(uuid)) {
                 return i;
             }
@@ -32,7 +30,7 @@ public class ListStorage extends AbstractStorage<Integer> {
     }
 
     @Override
-    public  boolean objectAlreadyExistsFor(Integer objectKey) {
+    public boolean objectAlreadyExistsFor(Integer objectKey) {
         int key = objectKey;
         return key >= 0;
     }
@@ -44,7 +42,7 @@ public class ListStorage extends AbstractStorage<Integer> {
 
 
     @Override
-    public  void insert(Resume r, Integer objectKey) {
+    public void insert(Resume r, Integer objectKey) {
         storage.add(r);
     }
 
