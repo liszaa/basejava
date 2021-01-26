@@ -12,8 +12,8 @@ public class MapUuidStorage extends AbstractStorage<String> {
     private Map<String, Resume> storage = new HashMap<>();
 
     @Override
-    public void insert(Resume r, String k) {
-        storage.put(k, r);
+    public void insert(Resume r, String key) {
+        storage.put(key, r);
     }
 
     @Override
@@ -27,18 +27,18 @@ public class MapUuidStorage extends AbstractStorage<String> {
     }
 
     @Override
-    public void updateResume(Resume r, String k) {
-        insert(r, k);
+    public void updateResume(Resume r, String key) {
+        insert(r, key);
     }
 
     @Override
-    public void deleteElement(String objectKey) {
-        storage.remove(objectKey);
+    public void deleteElement(String key) {
+        storage.remove(key);
     }
 
     @Override
-    public Resume getResume(String objectKey) {
-        return storage.get(objectKey);
+    public Resume getResume(String key) {
+        return storage.get(key);
     }
 
     @Override

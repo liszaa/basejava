@@ -68,17 +68,17 @@ public abstract class AbstractStorage<K> implements Storage {
 
     protected abstract List<Resume> getAll();
 
-    public abstract void insert(Resume r, K k); //+
+    public abstract void insert(Resume r, K key); //+
 
     public abstract K getKeyFor(String uuid); //+
 
     public abstract boolean objectAlreadyExistsFor(K key);
 
-    public abstract void updateResume(Resume r, K k);
+    public abstract void updateResume(Resume r, K key);
 
-    public abstract void deleteElement(K objectKey);
+    public abstract void deleteElement(K key);
 
-    public abstract Resume getResume(K objectKey);
+    public abstract Resume getResume(K key);
 
 
 }

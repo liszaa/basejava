@@ -65,7 +65,7 @@ public abstract class AbstractStorageTest {
         try {
             storage.get(resume4.getUuid());
         } catch (NotExistStorageException e) {
-            Assert.fail("Storage overflow ahead of time");
+            Assert.fail("Resume haven`t saved");
         }
         assertEquals(4, storage.size());
     }

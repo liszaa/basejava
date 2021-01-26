@@ -30,8 +30,7 @@ public class ListStorage extends AbstractStorage<Integer> {
     }
 
     @Override
-    public boolean objectAlreadyExistsFor(Integer objectKey) {
-        int key = objectKey;
+    public boolean objectAlreadyExistsFor(Integer key) {
         return key >= 0;
     }
 
@@ -52,8 +51,7 @@ public class ListStorage extends AbstractStorage<Integer> {
 
     @Override
     public void deleteElement(Integer objectKey) {
-        Resume resume = storage.get(objectKey);
-        storage.remove(resume);
+        storage.remove(objectKey.intValue());
     }
 
     @Override
