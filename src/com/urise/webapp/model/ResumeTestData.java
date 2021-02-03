@@ -10,32 +10,23 @@ public class ResumeTestData {
     public static void main(String[] args) {
 
         Map<SectionType, Section> sections = new LinkedHashMap<>();
+        Map<ContactType, String> contacts = new LinkedHashMap<>();
 
         // contacts
-        Contact tel = new Contact(ContactType.TELEPHONE, "+7(921) 855-0482");
-        Contact skype = new Contact(ContactType.SKYPE, "grigory.kislin");
-        Contact email = new Contact(ContactType.EMAIL, "gkislin@yandex.ru");
-        Contact linkedIn = new Contact(ContactType.LINKEDIN, "Профиль LinkedIn");
-        Contact gitHub = new Contact(ContactType.GITHUB, "Профиль GitHub");
-        Contact stackOverFlow = new Contact(ContactType.STACKOVERFLOW, "Профиль Stackoverflow");
-        Contact homePage = new Contact(ContactType.HOMEPAGE, "Домащняя страница");
-
-        ArrayList<Contact> contacts = new ArrayList<>();
-        contacts.add(tel);
-        contacts.add(skype);
-        contacts.add(email);
-        contacts.add(linkedIn);
-        contacts.add(gitHub);
-        contacts.add(stackOverFlow);
-        contacts.add(homePage);
-
+        contacts.put(ContactType.TELEPHONE, "+7(921) 855-0482");
+        contacts.put(ContactType.SKYPE, "grigory.kislin");
+        contacts.put(ContactType.EMAIL, "gkislin@yandex.ru");
+        contacts.put(ContactType.LINKEDIN, "Профиль LinkedIn");
+        contacts.put(ContactType.GITHUB, "Профиль GitHub");
+        contacts.put(ContactType.STACKOVERFLOW, "Профиль Stackoverflow");
+        contacts.put(ContactType.HOMEPAGE, "Домашняя страница");
 
         //Section OBJECTIVE("Позиция")
-        StringSection objective = new StringSection("Ведущий стажировок и корпоративного обучения по Java Web и Enterprise технологиям");
+        SingleLineSection objective = new SingleLineSection("Ведущий стажировок и корпоративного обучения по Java Web и Enterprise технологиям");
         sections.put(SectionType.OBJECTIVE, objective);
 
         //Section PERSONAL("Личные качества")
-        StringSection personal = new StringSection("Аналитический склад ума, сильная логика, креативность, инициативность. Пурист кода и архитектуры");
+        SingleLineSection personal = new SingleLineSection("Аналитический склад ума, сильная логика, креативность, инициативность. Пурист кода и архитектуры");
         sections.put(SectionType.PERSONAL, personal);
 
         //Section ACHIEVEMENT("Достижения")
@@ -52,7 +43,7 @@ public class ResumeTestData {
         achievements.add(achievement4);
         achievements.add(achievement5);
         achievements.add(achievement6);
-        ListSection achievement = new ListSection(achievements);
+        BulletedListSection achievement = new BulletedListSection(achievements);
         sections.put(SectionType.ACHIEVEMENT, achievement);
 
         //Section QUALIFICATIONS("Квалификация")
@@ -88,7 +79,7 @@ public class ResumeTestData {
         qualifications.add(qualification13);
         qualifications.add(qualification14);
         qualifications.add(qualification15);
-        ListSection qualification = new ListSection(qualifications);
+        BulletedListSection qualification = new BulletedListSection(qualifications);
         sections.put(SectionType.QUALIFICATIONS, qualification);
 
         //Section EXPERIENCE("Опыт работы")
@@ -114,7 +105,7 @@ public class ResumeTestData {
                         "remote scripting via ssh tunnels, PL/Python",
                 LocalDate.of(2012, 1, 1), LocalDate.of(2014, 10, 1));
 
-        PeriodInfo period4 = new PeriodInfo("Luxoft (Deutsche Bank",
+        PeriodInfo period4 = new PeriodInfo("Luxoft (Deutsche Bank)",
                 "Ведущий программист\n" +
                         "Участие в проекте Deutsche Bank CRM (WebLogic, Hibernate, Spring, Spring MVC, SmartGWT, GWT, Jasper,\n" +
                         "Oracle). Реализация клиентской и серверной части CRM. Реализация RIA-приложения для администрирования,\n" +
@@ -183,7 +174,7 @@ public class ResumeTestData {
                 LocalDate.of(1993, 9, 1), LocalDate.of(1996, 7, 1));
 
         PeriodInfo periodInfo6 = new PeriodInfo("",
-                "Инженер (программист Fortran, C",
+                "Инженер (программист Fortran, C)",
                 LocalDate.of(1987, 9, 1), LocalDate.of(1993, 7, 1));
 
         PeriodInfo periodInfo7 = new PeriodInfo("Заочная физико-техническая школа при МФТИ",
@@ -209,9 +200,8 @@ public class ResumeTestData {
         System.out.println(resume.getFullName());
         System.out.println(" ");
 
-        System.out.println("Контакты");
-        for (Contact contact : contacts) {
-            contact.asText();
+        for (Map.Entry<ContactType, String> entry : contacts.entrySet()) {
+            System.out.println(entry.getKey().getTitle() + " : " + entry.getValue());
         }
 
         for (Map.Entry<SectionType, Section> entry : sections.entrySet()) {
@@ -221,7 +211,6 @@ public class ResumeTestData {
             System.out.println(entry.getKey().getTitle());
             entry.getValue().asText();
         }
-
     }
 
 }

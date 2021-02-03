@@ -1,16 +1,16 @@
 package com.urise.webapp.model;
 
 import java.util.ArrayList;
+import java.util.List;
 
-public class ListSection implements Section {
-    ArrayList<String> content;
+public class BulletedListSection implements Section {
+    private List<String> content;
 
 
-    public ListSection(ArrayList<String> content) {
+    BulletedListSection(List<String> content) {
         this.content = content;
     }
 
-    @Override
     public void asText() {
         for (String content : content) {
             System.out.println(" • " + content);

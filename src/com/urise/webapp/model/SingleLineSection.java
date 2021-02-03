@@ -1,10 +1,10 @@
 package com.urise.webapp.model;
 
-public class StringSection implements Section {
+public class SingleLineSection implements Section {
 
-    String content;
+    private String content;
 
-    public StringSection(String content) {
+    SingleLineSection(String content) {
         this.content = content;
     }
 

@@ -1,20 +1,20 @@
 package com.urise.webapp.model;
 
-import java.util.ArrayList;
+import java.util.List;
 
 public class PeriodSection implements Section {
 
-    ArrayList<PeriodInfo> content;
+    private List<PeriodInfo> experiences;
 
-    public PeriodSection(ArrayList<PeriodInfo> content) {
-        this.content = content;
+    PeriodSection(List<PeriodInfo> content) {
+        this.experiences = content;
     }
 
-    @Override
+
     public void asText() {
-        for (PeriodInfo content : content) {
-            System.out.println(content.title);
-            System.out.print(content.start + " / " + content.finish + "          " + content.description);
+        for (PeriodInfo content : experiences) {
+            System.out.println(content.getTitle());
+            System.out.print(content.getStart() + " / " + content.getFinish() + "          " + content.getDescription());
             System.out.println(" ");
             System.out.println(" ");
         }
