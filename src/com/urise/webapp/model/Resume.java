@@ -10,12 +10,6 @@ public class Resume implements Comparable<Resume> {
     private Map<ContactType, String> contacts;
     private Map<SectionType, Section> sections;
 
-    public Resume(String fullName, Map<ContactType, String> contacts, Map<SectionType, Section> sections) {
-        this(UUID.randomUUID().toString(), fullName);
-        this.contacts = contacts;
-        this.sections = sections;
-    }
-
     public Resume(String fullName) {
         this(UUID.randomUUID().toString(), fullName);
     }
@@ -23,7 +17,12 @@ public class Resume implements Comparable<Resume> {
     public Resume(String uuid, String fullName) {
         this.uuid = uuid;
         this.fullName = fullName;
+    }
 
+    public Resume(String fullName, Map<ContactType, String> contacts, Map<SectionType, Section> sections) {
+        this(UUID.randomUUID().toString(), fullName);
+        this.contacts = contacts;
+        this.sections = sections;
     }
 
     public String getUuid() {
@@ -59,9 +58,4 @@ public class Resume implements Comparable<Resume> {
     public int compareTo(Resume o) {
         return (fullName.compareTo(o.fullName) == 0) ? uuid.compareTo(o.uuid) : fullName.compareTo(o.fullName);
     }
-
 }
-
-
-
-

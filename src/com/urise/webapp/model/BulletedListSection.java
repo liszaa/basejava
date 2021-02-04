@@ -1,19 +1,19 @@
 package com.urise.webapp.model;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class BulletedListSection implements Section {
     private List<String> content;
 
-
     BulletedListSection(List<String> content) {
         this.content = content;
     }
 
-    public void asText() {
+    public String toString() {
+        StringBuilder text = new StringBuilder();
         for (String content : content) {
-            System.out.println(" • " + content);
+            text.append(" • ").append(content).append("\n");
         }
+        return text.toString();
     }
 }

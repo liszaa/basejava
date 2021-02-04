@@ -10,13 +10,13 @@ public class PeriodSection implements Section {
         this.experiences = content;
     }
 
-
-    public void asText() {
+    @Override
+    public String toString() {
+        StringBuilder text = new StringBuilder();
         for (PeriodInfo content : experiences) {
-            System.out.println(content.getTitle());
-            System.out.print(content.getStart() + " / " + content.getFinish() + "          " + content.getDescription());
-            System.out.println(" ");
-            System.out.println(" ");
+            text.append(content.getTitle()).append("\n");
+            text.append(content.getStart()).append(" / ").append(content.getFinish()).append( "          ").append(content.getDescription()).append("\n\n");
         }
+        return text.toString();
     }
 }

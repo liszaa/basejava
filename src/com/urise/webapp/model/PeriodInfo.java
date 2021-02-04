@@ -5,6 +5,16 @@ import java.time.LocalDate;
 class PeriodInfo {
 
     private String title;
+    private String description;
+    private LocalDate start;
+    private LocalDate finish;
+
+    PeriodInfo(String title, String description, LocalDate start, LocalDate finish) {
+        this.title = title;
+        this.description = description;
+        this.start = start;
+        this.finish = finish;
+    }
 
     String getTitle() {
         return title;
@@ -20,16 +30,5 @@ class PeriodInfo {
 
     LocalDate getFinish() {
         return finish;
-    }
-
-    private String description;
-    private LocalDate start;
-    private LocalDate finish;
-
-    PeriodInfo(String title, String description, LocalDate start, LocalDate finish) {
-        this.title = title;
-        this.description = description;
-        this.start = start;
-        this.finish = finish;
     }
 }

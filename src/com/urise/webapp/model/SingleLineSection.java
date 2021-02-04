@@ -9,7 +9,7 @@ public class SingleLineSection implements Section {
     }
 
     @Override
-    public void asText() {
-        System.out.println(content);
+    public String toString() {
+        return content;
     }
 }

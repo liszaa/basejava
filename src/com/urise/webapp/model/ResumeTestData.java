@@ -196,7 +196,6 @@ public class ResumeTestData {
 
         Resume resume = new Resume("Григорий Кислин", contacts, sections);
 
-
         System.out.println(resume.getFullName());
         System.out.println(" ");
 
@@ -209,8 +208,7 @@ public class ResumeTestData {
             System.out.println(" ");
             System.out.println(" ");
             System.out.println(entry.getKey().getTitle());
-            entry.getValue().asText();
+            System.out.println(entry.getValue().toString());
         }
     }
-
 }
