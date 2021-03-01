@@ -2,15 +2,15 @@ package com.urise.webapp.model;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
-import java.util.LinkedHashMap;
+import java.util.EnumMap;
 import java.util.Map;
 
 public class ResumeTestData {
 
     public static void main(String[] args) {
 
-        Map<SectionType, Section> sections = new LinkedHashMap<>();
-        Map<ContactType, String> contacts = new LinkedHashMap<>();
+        Map<SectionType, Section> sections = new EnumMap<>(SectionType.class);
+        Map<ContactType, String> contacts = new EnumMap<>(ContactType.class);
 
         // contacts
         contacts.put(ContactType.TELEPHONE, "+7(921) 855-0482");

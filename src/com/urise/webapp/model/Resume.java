@@ -1,7 +1,9 @@
 package com.urise.webapp.model;
 
 
-import java.util.*;
+import java.util.Map;
+import java.util.Objects;
+import java.util.UUID;
 
 public class Resume implements Comparable<Resume> {
 
@@ -56,6 +58,7 @@ public class Resume implements Comparable<Resume> {
 
     @Override
     public int compareTo(Resume o) {
-        return (fullName.compareTo(o.fullName) == 0) ? uuid.compareTo(o.uuid) : fullName.compareTo(o.fullName);
+        return (fullName.compareTo(o.fullName) == 0) ? uuid.compareTo(o.uuid)
+                : fullName.compareTo(o.fullName);
     }
 }
