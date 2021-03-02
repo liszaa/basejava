@@ -1,23 +1,28 @@
 package com.urise.webapp.model;
 
+import java.util.Arrays;
 import java.util.List;
 import java.util.Objects;
 
 public class PeriodSection implements Section {
 
-    private List<PeriodInfo> experiences;
+    private List<Organization> experiences;
 
-    PeriodSection(List<PeriodInfo> content) {
+    PeriodSection(List<Organization> content) {
         Objects.requireNonNull(content, "content must be not null");
         this.experiences = content;
+    }
+
+    PeriodSection(Organization... content) {
+        Objects.requireNonNull(content, "content must be not null");
+        this.experiences = Arrays.asList(content);
     }
 
     @Override
     public String toString() {
         StringBuilder text = new StringBuilder();
-        for (PeriodInfo content : experiences) {
-            text.append(content.getTitle()).append("\n");
-            text.append(content.getStart()).append(" / ").append(content.getFinish()).append("          ").append(content.getDescription()).append("\n\n");
+        for (Organization content : experiences) {
+            text.append(content);
         }
         return text.toString();
     }

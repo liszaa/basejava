@@ -1,5 +1,6 @@
 package com.urise.webapp.model;
 
+import java.util.Arrays;
 import java.util.List;
 import java.util.Objects;
 
@@ -9,6 +10,11 @@ public class BulletedListSection implements Section {
     BulletedListSection(List<String> content) {
         Objects.requireNonNull(content, "content must be not null");
         this.content = content;
+    }
+
+    BulletedListSection(String... content) {
+        Objects.requireNonNull(content, "content must be not null");
+        this.content = Arrays.asList(content);
     }
 
     public String toString() {

@@ -19,8 +19,8 @@ public class MainFile {
             System.out.println(file.getName());
             File[] files = file.listFiles();
             assert files != null;
-            for (File strings : files)
-                recursiveSearchFileInDirectory(Objects.requireNonNull(strings));
+            for (File fileInDirectory : files)
+                recursiveSearchFileInDirectory(Objects.requireNonNull(fileInDirectory));
         } else {
             System.out.println(file);
         }
