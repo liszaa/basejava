@@ -74,7 +74,7 @@ public abstract class AbstractFileStorage extends AbstractStorage<File> {
 
     @Override
     public Resume getResume(File file) {
-        return getResumeFromFile();
+        return getResumeFromFile(file);
     }
 
     @Override
