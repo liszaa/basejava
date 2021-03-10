@@ -5,11 +5,11 @@ import java.util.Objects;
 
 public class MainFile {
     public static void main(String[] args) {
-        File mainFile = new File("/Users/lisa/Desktop/basejava/src/com/urise/webapp");
-        File[] dir = mainFile.listFiles();
+        File mainFile = new File("./src/com/urise/webapp");
+        File[] files = mainFile.listFiles();
 
-        assert dir != null;
-        for (File file : dir) {
+        assert files != null;
+        for (File file : files) {
             recursiveSearchFileInDirectory(file);
         }
     }

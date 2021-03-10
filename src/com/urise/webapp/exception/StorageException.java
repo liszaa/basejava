@@ -1,4 +1,4 @@
-package com.urise.webapp.Exception;
+package com.urise.webapp.exception;
 
 import java.io.IOException;
 

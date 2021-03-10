@@ -1,6 +1,6 @@
 package com.urise.webapp.storage;
 
-import com.urise.webapp.Exception.StorageException;
+import com.urise.webapp.exception.StorageException;
 import com.urise.webapp.model.Resume;
 
 import java.util.Arrays;
@@ -34,7 +34,7 @@ public abstract class AbstractArrayStorage extends AbstractStorage<Integer> {
     }
 
     @Override
-    public boolean objectAlreadyExistsFor(Integer objectKey) {
+    public boolean isExist(Integer objectKey) {
         return objectKey >= 0;
     }
 
@@ -52,7 +52,7 @@ public abstract class AbstractArrayStorage extends AbstractStorage<Integer> {
         size++;
     }
 
-    public void deleteElement(Integer objectKey) {
+    public void deleteResume(Integer objectKey) {
         deleteResume(objectKey);
         storage[size - 1] = null;
         size--;

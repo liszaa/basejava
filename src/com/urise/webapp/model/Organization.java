@@ -8,31 +8,31 @@ import java.util.Objects;
 
 public class Organization {
 
-    private final String linkOfOrganization;
-    private final String nameOfOrganization;
-    private List<PeriodInfo> positions = new ArrayList<>();
+    private final String link;
+    private final String name;
+    private List<Position> positions = new ArrayList<>();
 
-    public Organization(String linkOfOrganization, String nameOfOrganization, List<PeriodInfo> positions) {
-        this.linkOfOrganization = linkOfOrganization;
-        this.nameOfOrganization = nameOfOrganization;
+    public Organization(String link, String name, List<Position> positions) {
+        this.link = link;
+        this.name = name;
         this.positions = positions;
     }
 
-    public Organization(String linkOfOrganization, String nameOfOrganization, PeriodInfo... positions) {
-        this.linkOfOrganization = linkOfOrganization;
-        this.nameOfOrganization = nameOfOrganization;
+    public Organization(String link, String name, Position... positions) {
+        this.link = link;
+        this.name = name;
         this.positions = Arrays.asList(positions);
     }
 
-    public String getLinkOfOrganization() {
-        return linkOfOrganization;
+    public String getLink() {
+        return link;
     }
 
-    public String getNameOfOrganization() {
-        return nameOfOrganization;
+    public String getName() {
+        return name;
     }
 
-    public List<PeriodInfo> getPositions() {
+    public List<Position> getPositions() {
         return positions;
     }
 
@@ -40,8 +40,8 @@ public class Organization {
     @Override
     public String toString() {
         StringBuilder string = new StringBuilder();
-        string.append(nameOfOrganization).append("\n");
-        for (PeriodInfo period : positions) {
+        string.append(name).append("\n");
+        for (Position period : positions) {
             string.append(period.start.getMonthValue()).append("/").append(period.start.getYear()).append(" - ").append(period.finish.getMonthValue()).append("/").append(period.finish.getYear());
             string.append("        ").append(period.title);
             if (period.description != null) {
@@ -52,14 +52,14 @@ public class Organization {
         return string.toString();
     }
 
-    public static class PeriodInfo {
+    public static class Position {
 
         private String title;
         private String description;
         private LocalDate start;
         private LocalDate finish;
 
-        PeriodInfo(String title, String description, LocalDate start, LocalDate finish) {
+        public Position(String title, String description, LocalDate start, LocalDate finish) {
             Objects.requireNonNull(title, "title must be not null");
             Objects.requireNonNull(start, "start must be not null");
             Objects.requireNonNull(finish, "finish must be not null");
@@ -89,7 +89,7 @@ public class Organization {
         public boolean equals(Object o) {
             if (this == o) return true;
             if (o == null || getClass() != o.getClass()) return false;
-            PeriodInfo that = (PeriodInfo) o;
+            Position that = (Position) o;
             return title.equals(that.title) &&
                     description.equals(that.description) &&
                     start.equals(that.start) &&

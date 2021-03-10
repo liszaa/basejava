@@ -4,16 +4,16 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Objects;
 
-public class PeriodSection implements Section {
+public class OrganizationSection implements Section {
 
     private List<Organization> experiences;
 
-    PeriodSection(List<Organization> content) {
+    OrganizationSection(List<Organization> content) {
         Objects.requireNonNull(content, "content must be not null");
         this.experiences = content;
     }
 
-    PeriodSection(Organization... content) {
+    public OrganizationSection(Organization... content) {
         Objects.requireNonNull(content, "content must be not null");
         this.experiences = Arrays.asList(content);
     }
@@ -31,7 +31,7 @@ public class PeriodSection implements Section {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        PeriodSection that = (PeriodSection) o;
+        OrganizationSection that = (OrganizationSection) o;
         return experiences.equals(that.experiences);
     }
 

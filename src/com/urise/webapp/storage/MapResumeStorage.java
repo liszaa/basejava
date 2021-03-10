@@ -22,7 +22,7 @@ public class MapResumeStorage extends AbstractStorage<Resume> {
     }
 
     @Override
-    public boolean objectAlreadyExistsFor(Resume resume) {
+    public boolean isExist(Resume resume) {
         return resume != null;
     }
 
@@ -37,7 +37,7 @@ public class MapResumeStorage extends AbstractStorage<Resume> {
     }
 
     @Override
-    public void deleteElement(Resume resume) {
+    public void deleteResume(Resume resume) {
         map.remove(resume.getUuid());
     }
 

@@ -1,13 +1,12 @@
 package com.urise.webapp.storage;
 
-import com.urise.webapp.Exception.ExistStorageException;
-import com.urise.webapp.Exception.NotExistStorageException;
+import com.urise.webapp.exception.ExistStorageException;
+import com.urise.webapp.exception.NotExistStorageException;
 import com.urise.webapp.model.Resume;
 
 import java.util.Collections;
 import java.util.List;
 import java.util.logging.Logger;
-
 
 public abstract class AbstractStorage<K> implements Storage {
 
@@ -31,7 +30,7 @@ public abstract class AbstractStorage<K> implements Storage {
     public void delete(String uuid) {
         LOG.info("delete " + uuid);
         K key = getExistedKeyFor(uuid);
-        deleteElement(key);
+        deleteResume(key);
     }
 
     @Override
@@ -43,7 +42,7 @@ public abstract class AbstractStorage<K> implements Storage {
 
     private K getExistedKeyFor(String uuid) {
         K key = getKeyFor(uuid);
-        if (!objectAlreadyExistsFor(key)) {
+        if (!isExist(key)) {
             LOG.warning("Resume " + uuid + " not exist");
             throw new NotExistStorageException(uuid);
         }
@@ -52,7 +51,7 @@ public abstract class AbstractStorage<K> implements Storage {
 
     private K getNotExistedKeyFor(String uuid) {
         K key = getKeyFor(uuid);
-        if (objectAlreadyExistsFor(key)) {
+        if (isExist(key)) {
             LOG.warning("Resume " + uuid + " already exist");
             throw new ExistStorageException(uuid);
         }
@@ -72,11 +71,11 @@ public abstract class AbstractStorage<K> implements Storage {
 
     public abstract K getKeyFor(String uuid); //+
 
-    public abstract boolean objectAlreadyExistsFor(K key);
+    public abstract boolean isExist(K key);
 
     public abstract void updateResume(Resume r, K key);
 
-    public abstract void deleteElement(K key);
+    public abstract void deleteResume(K key);
 
     public abstract Resume getResume(K key);
 

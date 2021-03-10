@@ -1,6 +1,6 @@
 package com.urise.webapp.storage;
 
-import com.urise.webapp.Exception.StorageException;
+import com.urise.webapp.exception.StorageException;
 import com.urise.webapp.model.Resume;
 
 import java.io.File;
@@ -53,7 +53,7 @@ public abstract class AbstractFileStorage extends AbstractStorage<File> {
     }
 
     @Override
-    public boolean objectAlreadyExistsFor(File file) {
+    public boolean isExist(File file) {
         return file.exists();
     }
 
@@ -67,7 +67,7 @@ public abstract class AbstractFileStorage extends AbstractStorage<File> {
     }
 
     @Override
-    public void deleteElement(File file) {
+    public void deleteResume(File file) {
         file.delete();
         size--;
     }

@@ -7,12 +7,12 @@ import java.util.Objects;
 public class BulletedListSection implements Section {
     private List<String> content;
 
-    BulletedListSection(List<String> content) {
+    public BulletedListSection(List<String> content) {
         Objects.requireNonNull(content, "content must be not null");
         this.content = content;
     }
 
-    BulletedListSection(String... content) {
+    public BulletedListSection(String... content) {
         Objects.requireNonNull(content, "content must be not null");
         this.content = Arrays.asList(content);
     }

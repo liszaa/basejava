@@ -22,7 +22,7 @@ public class MapUuidStorage extends AbstractStorage<String> {
     }
 
     @Override
-    public boolean objectAlreadyExistsFor(String key) {
+    public boolean isExist(String key) {
         return storage.get(key) != null;
     }
 
@@ -32,7 +32,7 @@ public class MapUuidStorage extends AbstractStorage<String> {
     }
 
     @Override
-    public void deleteElement(String key) {
+    public void deleteResume(String key) {
         storage.remove(key);
     }
 

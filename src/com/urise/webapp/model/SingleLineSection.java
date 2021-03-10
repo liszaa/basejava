@@ -6,7 +6,7 @@ public class SingleLineSection implements Section {
 
     private String content;
 
-    SingleLineSection(String content) {
+    public SingleLineSection(String content) {
         Objects.requireNonNull(content, "content must be not null");
         this.content = content;
     }
