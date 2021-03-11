@@ -311,7 +311,7 @@ public class ResumeTestData {
         }
     }
 
-    public static Resume resumeInit(String fullName, String uuid) {
+    public static Resume initResume(String fullName, String uuid) {
 
         Map<SectionType, Section> sections = new EnumMap<>(SectionType.class);
         Map<ContactType, String> contacts = new EnumMap<>(ContactType.class);

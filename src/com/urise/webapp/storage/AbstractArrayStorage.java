@@ -53,12 +53,12 @@ public abstract class AbstractArrayStorage extends AbstractStorage<Integer> {
     }
 
     public void deleteResume(Integer objectKey) {
-        deleteResume(objectKey);
+        delete(objectKey);
         storage[size - 1] = null;
         size--;
     }
 
-    protected abstract void deleteResume(int objectKey);
+    protected abstract void delete(int objectKey);
 
     public abstract void saveResume(Resume r, Integer objectKey);
 }

@@ -23,10 +23,10 @@ public abstract class AbstractStorageTest {
     private static Resume resume4;
 
     static {
-        resume1 = ResumeTestData.resumeInit("Илья", "UUID_1");
-        resume2 = ResumeTestData.resumeInit("Илья", "UUID_2");
-        resume3 = ResumeTestData.resumeInit("Максим", "UUID_3");
-        resume4 = ResumeTestData.resumeInit("Лиза", "UUID_4");
+        resume1 = ResumeTestData.initResume("Илья", "UUID_1");
+        resume2 = ResumeTestData.initResume("Илья", "UUID_2");
+        resume3 = ResumeTestData.initResume("Максим", "UUID_3");
+        resume4 = ResumeTestData.initResume("Лиза", "UUID_4");
     }
 
     Storage storage;
