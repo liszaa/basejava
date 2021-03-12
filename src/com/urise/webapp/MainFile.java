@@ -10,19 +10,20 @@ public class MainFile {
 
         assert files != null;
         for (File file : files) {
-            recursiveSearchFileInDirectory(file);
+            recursiveSearchFileInDirectory(file, 0);
         }
     }
 
-    private static void recursiveSearchFileInDirectory(File file) {
+    private static void recursiveSearchFileInDirectory(File file, int level) {
+        String whitespace = " ".repeat(level * 2);
         if (file.isDirectory()) {
-            System.out.println(file.getName());
+            System.out.println(whitespace + file.getName());
             File[] files = file.listFiles();
             assert files != null;
             for (File fileInDirectory : files)
-                recursiveSearchFileInDirectory(Objects.requireNonNull(fileInDirectory));
+                recursiveSearchFileInDirectory(Objects.requireNonNull(fileInDirectory), level + 1);
         } else {
-            System.out.println(file);
+            System.out.println(whitespace + file.getPath());
         }
     }
 }
