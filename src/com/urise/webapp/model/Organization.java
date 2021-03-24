@@ -1,13 +1,15 @@
 package com.urise.webapp.model;
 
+import java.io.Serializable;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Objects;
 
-public class Organization {
+public class Organization implements Serializable {
 
+    private static final long serialVersionUID = -2466447498750409674L;
     private final String link;
     private final String name;
     private List<Position> positions = new ArrayList<>();
@@ -36,6 +38,20 @@ public class Organization {
         return positions;
     }
 
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Organization that = (Organization) o;
+        return Objects.equals(link, that.link) &&
+                Objects.equals(name, that.name) &&
+                Objects.equals(positions, that.positions);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(link, name, positions);
+    }
 
     @Override
     public String toString() {
@@ -52,8 +68,9 @@ public class Organization {
         return string.toString();
     }
 
-    public static class Position {
+    public static class Position implements Serializable {
 
+        private static final long serialVersionUID = 264061032491292813L;
         private String title;
         private String description;
         private LocalDate start;
@@ -89,11 +106,11 @@ public class Organization {
         public boolean equals(Object o) {
             if (this == o) return true;
             if (o == null || getClass() != o.getClass()) return false;
-            Position that = (Position) o;
-            return title.equals(that.title) &&
-                    description.equals(that.description) &&
-                    start.equals(that.start) &&
-                    finish.equals(that.finish);
+            Position position = (Position) o;
+            return Objects.equals(title, position.title) &&
+                    Objects.equals(description, position.description) &&
+                    Objects.equals(start, position.start) &&
+                    Objects.equals(finish, position.finish);
         }
 
         @Override

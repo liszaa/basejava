@@ -1,5 +1,7 @@
 package com.urise.webapp.model;
 
+import java.io.Serializable;
+
 public enum ContactType {
     TELEPHONE("Телефон"),
     SKYPE("Skype"),

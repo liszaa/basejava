@@ -4,6 +4,7 @@ import java.util.Objects;
 
 public class SingleLineSection implements Section {
 
+    private static final long serialVersionUID = 4746336089527833352L;
     private String content;
 
     public SingleLineSection(String content) {

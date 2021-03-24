@@ -1,5 +1,7 @@
 package com.urise.webapp.model;
 
+import java.io.Serializable;
+
 public enum SectionType {
     OBJECTIVE("Позиция"),
     PERSONAL("Личные качества"),

@@ -1,12 +1,14 @@
 package com.urise.webapp.model;
 
 
+import java.io.Serializable;
 import java.util.Map;
 import java.util.Objects;
 import java.util.UUID;
 
-public class Resume implements Comparable<Resume> {
+public class Resume implements Comparable<Resume>, Serializable {
 
+    private static final long serialVersionUID = 5720915645400700583L;
     private final String uuid;
     private final String fullName;
     private Map<ContactType, String> contacts;
@@ -60,7 +62,12 @@ public class Resume implements Comparable<Resume> {
 
     @Override
     public String toString() {
-        return uuid;
+        return "Resume{" +
+                "uuid='" + uuid + '\'' +
+                ", fullName='" + fullName + '\'' +
+                ", contacts=" + contacts +
+                ", sections=" + sections +
+                '}';
     }
 
     @Override

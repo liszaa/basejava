@@ -50,6 +50,7 @@ public abstract class AbstractStorage<K> implements Storage {
     }
 
     private K getNotExistedKeyFor(String uuid) {
+        System.out.println("getNotExistedKeyFor");
         K key = getKeyFor(uuid);
         if (isExist(key)) {
             LOG.warning("Resume " + uuid + " already exist");

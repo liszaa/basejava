@@ -17,6 +17,8 @@ import static org.junit.Assert.assertSame;
 
 public abstract class AbstractStorageTest {
 
+    static final String STORAGE_DIR = "/Users/lisa/Desktop/basejava/storage";
+
     private static Resume resume1;
     private static Resume resume2;
     private static Resume resume3;

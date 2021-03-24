@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.Objects;
 
 public class BulletedListSection implements Section {
+    private static final long serialVersionUID = 6406750252899917034L;
     private List<String> content;
 
     public BulletedListSection(List<String> content) {
