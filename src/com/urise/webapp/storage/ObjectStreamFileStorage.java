@@ -12,10 +12,10 @@ public class ObjectStreamFileStorage extends AbstractStorage<File> {
 
     protected File directory;
     private int size;
-    private Serializier serializier;
+    private Serializer serializer;
 
 
-    public ObjectStreamFileStorage(String path, Serializier serializier) {
+    public ObjectStreamFileStorage(String path, Serializer serializer) {
         File directory = new File(path);
         Objects.requireNonNull(directory, "Directory must not be null");
         if (!directory.isDirectory()) {
@@ -25,7 +25,7 @@ public class ObjectStreamFileStorage extends AbstractStorage<File> {
             throw new IllegalArgumentException(directory.getAbsolutePath() + " is not readable/writable");
         }
         this.directory = directory;
-        this.serializier = serializier;
+        this.serializer = serializer;
 
     }
 
@@ -44,7 +44,7 @@ public class ObjectStreamFileStorage extends AbstractStorage<File> {
     public void insert(Resume r, File file) {
         try {
             file.createNewFile();
-            serializier.write(r, new BufferedOutputStream(new FileOutputStream(file)));
+            serializer.write(r, new BufferedOutputStream(new FileOutputStream(file)));
         } catch (IOException e) {
             throw new StorageException("IO error", file.getName(), e);
         }
@@ -64,7 +64,7 @@ public class ObjectStreamFileStorage extends AbstractStorage<File> {
     @Override
     public void updateResume(Resume r, File file) {
         try {
-            serializier.write(r, new FileOutputStream(file));
+            serializer.write(r, new FileOutputStream(file));
         } catch (IOException e) {
             throw new StorageException("IO error", file.getName(), e);
         }
@@ -79,7 +79,7 @@ public class ObjectStreamFileStorage extends AbstractStorage<File> {
     @Override
     public Resume getResume(File file) {
         try {
-            return serializier.readResumeFrom(new BufferedInputStream(new FileInputStream(file)));
+            return serializer.readResumeFrom(new BufferedInputStream(new FileInputStream(file)));
         } catch (IOException e) {
             throw new StorageException("File reading error", file.getName(), e);
         }

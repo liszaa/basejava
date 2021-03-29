@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.Objects;
 
 public class BulletedListSection implements Section {
+
     private static final long serialVersionUID = 6406750252899917034L;
     private List<String> content;
 
@@ -16,6 +17,10 @@ public class BulletedListSection implements Section {
     public BulletedListSection(String... content) {
         Objects.requireNonNull(content, "content must be not null");
         this.content = Arrays.asList(content);
+    }
+
+    public List<String> getContent() {
+        return content;
     }
 
     public String toString() {

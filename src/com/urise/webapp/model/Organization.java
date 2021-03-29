@@ -10,28 +10,16 @@ import java.util.Objects;
 public class Organization implements Serializable {
 
     private static final long serialVersionUID = -2466447498750409674L;
-    private final String link;
-    private final String name;
+    private final Link homePage;
     private List<Position> positions = new ArrayList<>();
 
-    public Organization(String link, String name, List<Position> positions) {
-        this.link = link;
-        this.name = name;
+    public Organization(String name, String url, Position... positions) {
+        this(new Link(name, url), Arrays.asList(positions));
+    }
+
+    public Organization(Link homePage, List<Position> positions) {
+        this.homePage = homePage;
         this.positions = positions;
-    }
-
-    public Organization(String link, String name, Position... positions) {
-        this.link = link;
-        this.name = name;
-        this.positions = Arrays.asList(positions);
-    }
-
-    public String getLink() {
-        return link;
-    }
-
-    public String getName() {
-        return name;
     }
 
     public List<Position> getPositions() {
@@ -43,20 +31,19 @@ public class Organization implements Serializable {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Organization that = (Organization) o;
-        return Objects.equals(link, that.link) &&
-                Objects.equals(name, that.name) &&
+        return Objects.equals(homePage, that.homePage) &&
                 Objects.equals(positions, that.positions);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(link, name, positions);
+        return Objects.hash(homePage, positions);
     }
 
     @Override
     public String toString() {
         StringBuilder string = new StringBuilder();
-        string.append(name).append("\n");
+        string.append(homePage.getName()).append("\n");
         for (Position period : positions) {
             string.append(period.start.getMonthValue()).append("/").append(period.start.getYear()).append(" - ").append(period.finish.getMonthValue()).append("/").append(period.finish.getYear());
             string.append("        ").append(period.title);

@@ -10,27 +10,26 @@ import java.util.Map;
 public class ResumeTestData {
 
     public static void main(String[] args) {
-        Map<SectionType, Section> sections = new EnumMap<>(SectionType.class);
-        Map<ContactType, String> contacts = new EnumMap<>(ContactType.class);
+        Resume resume = new Resume("Григорий Кислин");
 
         // contacts
-        contacts.put(ContactType.TELEPHONE, "+7(921) 855-0482");
-        contacts.put(ContactType.SKYPE, "grigory.kislin");
-        contacts.put(ContactType.EMAIL, "gkislin@yandex.ru");
-        contacts.put(ContactType.LINKEDIN, "Профиль LinkedIn");
-        contacts.put(ContactType.GITHUB, "Профиль GitHub");
-        contacts.put(ContactType.STACKOVERFLOW, "Профиль Stackoverflow");
-        contacts.put(ContactType.HOMEPAGE, "Домашняя страница");
+        resume.addContact(ContactType.TELEPHONE, "+7(921) 855-0482");
+        resume.addContact(ContactType.SKYPE, "grigory.kislin");
+        resume.addContact(ContactType.EMAIL, "gkislin@yandex.ru");
+        resume.addContact(ContactType.LINKEDIN, "Профиль LinkedIn");
+        resume.addContact(ContactType.GITHUB, "Профиль GitHub");
+        resume.addContact(ContactType.STACKOVERFLOW, "Профиль Stackoverflow");
+        resume.addContact(ContactType.HOMEPAGE, "Домашняя страница");
 
         // Section OBJECTIVE("Позиция")
         SingleLineSection objective = new SingleLineSection("Ведущий стажировок и корпоративного обучения по " +
                                                             "Java Web и Enterprise технологиям");
-        sections.put(SectionType.OBJECTIVE, objective);
+        resume.addSection(SectionType.OBJECTIVE, objective);
 
         // Section PERSONAL("Личные качества")
         SingleLineSection personal = new SingleLineSection("Аналитический склад ума, сильная логика, " +
                                                             "креативность, инициативность. Пурист кода и архитектуры");
-        sections.put(SectionType.PERSONAL, personal);
+        resume.addSection(SectionType.PERSONAL, personal);
 
         // Section ACHIEVEMENT("Достижения")
         String achievement1 = "С 2013 года: разработка проектов \"Разработка Web приложения\",\"Java Enterprise\", " +
@@ -59,7 +58,7 @@ public class ResumeTestData {
         achievements.add(achievement5);
         achievements.add(achievement6);
         BulletedListSection achievement = new BulletedListSection(achievements);
-        sections.put(SectionType.ACHIEVEMENT, achievement);
+        resume.addSection(SectionType.ACHIEVEMENT, achievement);
 
         // Section QUALIFICATIONS("Квалификация")
         String qualification1 = "JEE AS: GlassFish (v2.1, v3), OC4J, JBoss, Tomcat, Jetty, WebLogic, WSO2";
@@ -102,13 +101,13 @@ public class ResumeTestData {
         qualifications.add(qualification14);
         qualifications.add(qualification15);
         BulletedListSection qualification = new BulletedListSection(qualifications);
-        sections.put(SectionType.QUALIFICATIONS, qualification);
+        resume.addSection(SectionType.QUALIFICATIONS, qualification);
 
 
         // Section EXPERIENCE("Опыт работы")
         Organization organization1 = new Organization(
-                "http://javaops.ru/",
                 "Java Online Projects",
+                "http://javaops.ru/",
                 new Organization.Position(
                         "Автор проекта",
                         "Создание, организация и проведение Java онлайн проектов и стажировок.",
@@ -118,8 +117,8 @@ public class ResumeTestData {
         );
 
         Organization organization2 = new Organization(
-                "https://www.wrike.com/",
                 "Wrike",
+                "https://www.wrike.com/",
                 new Organization.Position(
                     "Старший разработчик (backend)",
                     "Проектирование и разработка онлайн платформы управления проектами Wrike (Java 8 API, " +
@@ -132,8 +131,8 @@ public class ResumeTestData {
         );
 
         Organization organization3 = new Organization(
-                null,
                 "RIT Center",
+                null,
                 new Organization.Position(
                         "Java архитектор",
                         "организация процесса разработки " +
@@ -151,8 +150,8 @@ public class ResumeTestData {
         );
 
         Organization organization4 = new Organization(
-                "https://www.luxoft.ru/",
                 "Luxoft (Deutsche Bank)",
+                "https://www.luxoft.ru/",
                 new Organization.Position(
                         "Ведущий программист",
                         "Участие в проекте Deutsche Bank CRM (WebLogic, Hibernate, Spring, Spring MVC, SmartGWT, " +
@@ -166,8 +165,8 @@ public class ResumeTestData {
         );
 
         Organization organization5 = new Organization(
-                "https://www.yota.ru/",
                 "Yota",
+                "https://www.yota.ru/",
                 new Organization.Position(
                         "Ведущий специалист",
                         "Дизайн и имплементация Java EE фреймворка для отдела \"Платежные Системы\" " +
@@ -180,8 +179,8 @@ public class ResumeTestData {
         );
 
         Organization organization6 = new Organization(
-                "http://enkata.com/",
                 "Enkata",
+                "http://enkata.com/",
                 new Organization.Position(
                         "Разработчик ПО",
                         "Реализация клиентской (Eclipse RCP) и серверной (JBoss 4.2, Hibernate 3.0, Tomcat, JMS)" +
@@ -193,8 +192,8 @@ public class ResumeTestData {
 
 
         Organization organization7 = new Organization(
-                "https://www.siemens.com/ru/ru/home.html",
                 "Siemens AG",
+                "https://www.siemens.com/ru/ru/home.html",
                 new Organization.Position("Разработчик ПО",
                 "Разработка информационной модели, проектирование интерфейсов, реализация и отладка ПО " +
                         "на мобильной IN\n платформе Siemens @vantage (Java, Unix).",
@@ -203,7 +202,7 @@ public class ResumeTestData {
                 )
         );
 
-        Organization organization8 = new Organization("http://www.alcatel.ru/", "Alcatel",
+        Organization organization8 = new Organization("Alcatel","http://www.alcatel.ru/",
                 new Organization.Position("Инженер по аппаратному и программному тестированию",
                 "Тестирование, отладка, внедрение ПО цифровой телефонной станции Alcatel 1000 S12 (CHILL, ASM).",
                 LocalDate.of(1997, 9, 1),
@@ -213,13 +212,13 @@ public class ResumeTestData {
 
         OrganizationSection experiences = new OrganizationSection(organization1, organization2, organization3, organization4,
                                                         organization5, organization6, organization7, organization8);
-        sections.put(SectionType.EXPERIENCE, experiences);
+        resume.addSection(SectionType.EXPERIENCE, experiences);
 
 
         // Section EDUCATION("Образование")
         Organization organ1 = new Organization(
-                "https://www.coursera.org/course/progfun",
                 "Coursera",
+                "https://www.coursera.org/course/progfun",
                 new Organization.Position(
                         "\"Functional Programming Principles in Scala\" by Martin Odersky",
                         "",
@@ -229,8 +228,8 @@ public class ResumeTestData {
         );
 
         Organization organ2 = new Organization(
-                 "http://www.luxoft-training.ru/training/catalog/course.html?ID=22366",
-                  "Luxoft",
+                "Luxoft",
+                "http://www.luxoft-training.ru/training/catalog/course.html?ID=22366",
                    new Organization.Position(
                            "Курс \"Объектно-ориентированный анализ ИС. Концептуальное моделирование на UML.\"",
                            "",
@@ -240,8 +239,8 @@ public class ResumeTestData {
         );
 
         Organization organ3 = new Organization(
-                "http://www.siemens.ru/",
                 "Siemens AG",
+                "http://www.siemens.ru/",
                 new Organization.Position(
                         "3 месяца обучения мобильным IN сетям (Берлин)",
                         "",
@@ -251,8 +250,8 @@ public class ResumeTestData {
         );
 
         Organization organ4 = new Organization(
-                "http://www.alcatel.ru/",
                 "Alcatel",
+                "http://www.alcatel.ru/",
                 new Organization.Position(
                         "6 месяцев обучения цифровым телефонным сетям (Москва)",
                         "",
@@ -261,9 +260,9 @@ public class ResumeTestData {
         );
 
         Organization organ5 = new Organization(
-                "http://www.ifmo.ru/",
                 "Санкт-Петербургский национальный исследовательский университет информационных " +
                         "технологий, механики и оптики",
+                "http://www.ifmo.ru/",
                 new Organization.Position(
                         "Аспирантура (программист С, С++)",
                         "",
@@ -279,8 +278,8 @@ public class ResumeTestData {
 
 
         Organization organ6 = new Organization(
-                "http://www.school.mipt.ru/",
                 "Заочная физико-техническая школа при МФТИ",
+                "http://www.school.mipt.ru/",
                 new Organization.Position(
                         "Закончил с отличием",
                         "",
@@ -290,19 +289,16 @@ public class ResumeTestData {
         );
 
         OrganizationSection educations = new OrganizationSection(organ1, organ2, organ3, organ4, organ5, organ6);
-        sections.put(SectionType.EDUCATION, educations);
-
-
-        Resume resume = new Resume("Григорий Кислин", contacts, sections);
+        resume.addSection(SectionType.EDUCATION, educations);
 
         System.out.println(resume.getFullName());
         System.out.println(" ");
 
-        for (Map.Entry<ContactType, String> entry : contacts.entrySet()) {
+        for (Map.Entry<ContactType, String> entry : resume.getContacts().entrySet()) {
             System.out.println(entry.getKey().getTitle() + " : " + entry.getValue());
         }
 
-        for (Map.Entry<SectionType, Section> entry : sections.entrySet()) {
+        for (Map.Entry<SectionType, Section> entry : resume.getSections().entrySet()) {
             System.out.println(" ");
             System.out.println(" ");
             System.out.println(" ");
@@ -311,39 +307,41 @@ public class ResumeTestData {
         }
     }
 
-    public static Resume initResume(String fullName, String uuid) {
+    public static Resume initResume(String uuid, String fullName) {
+
+        Resume resume = new Resume(uuid, fullName);
 
         Map<SectionType, Section> sections = new EnumMap<>(SectionType.class);
         Map<ContactType, String> contacts = new EnumMap<>(ContactType.class);
 
         // contacts
-        contacts.put(ContactType.TELEPHONE, "Телефон " + fullName + " : " + uuid);
-        contacts.put(ContactType.SKYPE, "Skype " + fullName + " : " + uuid);
-        contacts.put(ContactType.EMAIL, "Email " + fullName + " : " + uuid);
-        contacts.put(ContactType.LINKEDIN, "Профиль LinkedIn " + fullName + " : " + uuid);
-        contacts.put(ContactType.GITHUB, "Профиль GitHub " + fullName + " : " + uuid);
-        contacts.put(ContactType.STACKOVERFLOW, "Профиль Stackoverflow " + fullName + " : " + uuid);
-        contacts.put(ContactType.HOMEPAGE, "Домашняя страница " + fullName + " : " + uuid);
+        resume.addContact(ContactType.TELEPHONE, "Телефон " + fullName + " : " + uuid);
+        resume.addContact(ContactType.SKYPE, "Skype " + fullName + " : " + uuid);
+        resume.addContact(ContactType.EMAIL, "Email " + fullName + " : " + uuid);
+        resume.addContact(ContactType.LINKEDIN, "Профиль LinkedIn " + fullName + " : " + uuid);
+        resume.addContact(ContactType.GITHUB, "Профиль GitHub " + fullName + " : " + uuid);
+        resume.addContact(ContactType.STACKOVERFLOW, "Профиль Stackoverflow " + fullName + " : " + uuid);
+        resume.addContact(ContactType.HOMEPAGE, "Домашняя страница " + fullName + " : " + uuid);
 
         // Section OBJECTIVE("Позиция")
         SingleLineSection objective = new SingleLineSection("Позиция " + fullName + " : " + uuid);
-        sections.put(SectionType.OBJECTIVE, objective);
+        resume.addSection(SectionType.OBJECTIVE, objective);
 
         // Section PERSONAL("Личные качества")
         SingleLineSection personal = new SingleLineSection("Личные качества " + fullName + " : " + uuid);
-        sections.put(SectionType.PERSONAL, personal);
+        resume.addSection(SectionType.PERSONAL, personal);
 
         // Section ACHIEVEMENT("Достижения")
         BulletedListSection achievement = new BulletedListSection("Достижение1 " + fullName + " : " + uuid,
                                                                   "Достижение2 " + fullName + " : " + uuid,
                                                                   "Достижение3 " + fullName + " : " + uuid);
-        sections.put(SectionType.ACHIEVEMENT, achievement);
+        resume.addSection(SectionType.ACHIEVEMENT, achievement);
 
         // Section QUALIFICATIONS("Квалификация")
         BulletedListSection qualification = new BulletedListSection("Квалификация1 " + fullName + " : " + uuid,
                                                                     "Квалификация2 " + fullName + " : " + uuid,
                                                                     "Квалификация3 " + fullName + " : " + uuid);
-        sections.put(SectionType.QUALIFICATIONS, qualification);
+        resume.addSection(SectionType.QUALIFICATIONS, qualification);
 
         // Section EXPERIENCE("Опыт работы")
         Organization organization1 = new Organization(
@@ -379,7 +377,7 @@ public class ResumeTestData {
         );
 
         OrganizationSection experiences = new OrganizationSection(organization1, organization2, organization3);
-        sections.put(SectionType.EXPERIENCE, experiences);
+        resume.addSection(SectionType.EXPERIENCE, experiences);
 
         // Section EDUCATION("Образование")
         Organization organ1 = new Organization(
@@ -416,8 +414,9 @@ public class ResumeTestData {
         );
 
         OrganizationSection educations = new OrganizationSection(organ1, organ2, organ3);
-        sections.put(SectionType.EDUCATION, educations);
+        resume.addSection(SectionType.EDUCATION, educations);
 
-        return new Resume(uuid, fullName, contacts, sections);
+        return resume;
+
     }
 }

@@ -18,9 +18,9 @@ public class ObjectStreamPathStorage extends AbstractStorage<Path> {
 
     protected Path directory;
     private int size;
-    private Serializier serializier;
+    private Serializer serializer;
 
-    public ObjectStreamPathStorage(String path, Serializier serializier) {
+    public ObjectStreamPathStorage(String path, Serializer serializer) {
         Path directory = Paths.get(path);
         Objects.requireNonNull(directory, "Directory must not be null");
         if (!Files.isDirectory(directory)) {
@@ -30,7 +30,7 @@ public class ObjectStreamPathStorage extends AbstractStorage<Path> {
             throw new IllegalArgumentException(directory.toString() + " is not readable/writable");
         }
         this.directory = directory;
-        this.serializier = serializier;
+        this.serializer = serializer;
     }
 
     @Override
@@ -53,7 +53,7 @@ public class ObjectStreamPathStorage extends AbstractStorage<Path> {
         try {
             System.out.println("going to save resume " + r.getUuid() + " to file: " + path.toString());
             Files.createFile(path);
-            serializier.write(r, new BufferedOutputStream(Files.newOutputStream(path)));
+            serializer.write(r, new BufferedOutputStream(Files.newOutputStream(path)));
         } catch (IOException e) {
             throw new StorageException("IO error", path.toString(), e);
         }
@@ -77,7 +77,7 @@ public class ObjectStreamPathStorage extends AbstractStorage<Path> {
     @Override
     public void updateResume(Resume r, Path path) {
         try {
-            serializier.write(r, Files.newOutputStream(path));
+            serializer.write(r, Files.newOutputStream(path));
         } catch (IOException e) {
             throw new StorageException("IO error", path.toString(), e);
         }
@@ -97,7 +97,7 @@ public class ObjectStreamPathStorage extends AbstractStorage<Path> {
     @Override
     public Resume getResume(Path path) {
         try {
-            return serializier.readResumeFrom(new BufferedInputStream(Files.newInputStream(path)));
+            return serializer.readResumeFrom(new BufferedInputStream(Files.newInputStream(path)));
         } catch (IOException e) {
             throw new StorageException("File reading error", path.toString(), e);
         }

@@ -6,7 +6,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 
-public interface Serializier {
+public interface Serializer {
 
     void write(Resume r, OutputStream os) throws IOException;
 

@@ -5,7 +5,7 @@ import com.urise.webapp.model.Resume;
 
 import java.io.*;
 
-public class ObjectSerializier implements Serializier {
+public class ObjectSerializier implements Serializer {
 
     @Override
     public void write(Resume r, OutputStream os) throws IOException {

@@ -25,10 +25,10 @@ public abstract class AbstractStorageTest {
     private static Resume resume4;
 
     static {
-        resume1 = ResumeTestData.initResume("Илья", "UUID_1");
-        resume2 = ResumeTestData.initResume("Илья", "UUID_2");
-        resume3 = ResumeTestData.initResume("Максим", "UUID_3");
-        resume4 = ResumeTestData.initResume("Лиза", "UUID_4");
+        resume1 = ResumeTestData.initResume("UUID_1", "Илья");
+        resume2 = ResumeTestData.initResume("UUID_2", "Илья");
+        resume3 = ResumeTestData.initResume("UUID_3", "Максим");
+        resume4 = ResumeTestData.initResume("UUID_4", "Лиза");
     }
 
     Storage storage;
@@ -100,7 +100,7 @@ public abstract class AbstractStorageTest {
 
     @Test
     public void getResumeTest() {
-        assertSame(resume2, storage.get(resume2.getUuid()));
+        assertEquals(resume2, storage.get(resume2.getUuid()));
     }
 
     @Test(expected = NotExistStorageException.class)
