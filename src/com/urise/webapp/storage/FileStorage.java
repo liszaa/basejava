@@ -32,15 +32,9 @@ public class FileStorage extends AbstractStorage<File> {
     @Override
     protected List<Resume> getAll() {
         List<Resume> resumes = new ArrayList<>();
-        File[] files = directory.listFiles();
-        if (files != null)  {
-            for (File file : files) {
-                resumes.add(getResume(file));
-            }
-        } else {
-            throw new StorageException("Directory must be not empty", directory.getName());
+        for (File file : getFiles()) {
+            resumes.add(getResume(file));
         }
-
         return resumes;
     }
 
@@ -91,18 +85,22 @@ public class FileStorage extends AbstractStorage<File> {
 
     @Override
     public int size() {
-        return Objects.requireNonNull(directory.listFiles()).length;
+        return getFiles().length;
     }
 
     @Override
     public void clear() {
-        File[] files = directory.listFiles();
-        if (files != null) {
-            for (File file : files) {
-                deleteResume(file);
-            }
-        } else {
-            throw new StorageException("Directory must be not empty", directory.getName());
+        for (File file : getFiles()) {
+            deleteResume(file);
         }
     }
+
+    private File[] getFiles() {
+        File[] files = directory.listFiles();
+        if (files == null) {
+            throw new StorageException("Directory must be not empty", directory.getName());
+        }
+        return files;
+    }
+
 }

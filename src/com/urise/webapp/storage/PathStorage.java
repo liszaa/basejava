@@ -1,6 +1,5 @@
 package com.urise.webapp.storage;
 
-import com.urise.webapp.exception.NotExistStorageException;
 import com.urise.webapp.exception.StorageException;
 import com.urise.webapp.model.Resume;
 import com.urise.webapp.storage.serializer.Serializer;
@@ -9,7 +8,6 @@ import java.io.*;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 import java.util.stream.Collectors;
@@ -35,11 +33,7 @@ public class PathStorage extends AbstractStorage<Path> {
 
     @Override
     protected List<Resume> getAll() {
-        try {
-            return Files.list(directory).map(this::getResume).collect(Collectors.toList());
-        } catch (IOException e) {
-            throw new StorageException("Directory must be not empty", directory.toString());
-        }
+        return getFiles().map(this::getResume).collect(Collectors.toList());
     }
 
     @Override
@@ -76,8 +70,7 @@ public class PathStorage extends AbstractStorage<Path> {
         try {
             Files.delete(path);
         } catch (IOException e) {
-            System.out.println(e);
-            throw new NotExistStorageException(path.toString());
+            throw new StorageException("File cannot be deleted", path.toString());
         }
     }
 
@@ -92,19 +85,20 @@ public class PathStorage extends AbstractStorage<Path> {
 
     @Override
     public int size() {
+        return (int) getFiles().count();
+    }
+
+    @Override
+    public void clear() {
+        getFiles().forEach(this::deleteResume);
+    }
+
+    private Stream<Path> getFiles() {
         try {
-            return Files.list(directory).toArray().length;
+            return Files.list(directory);
         } catch (IOException e) {
             throw new StorageException("Directory must be not empty", directory.toString(), e);
         }
     }
 
-    @Override
-    public void clear() {
-        try {
-            Files.list(directory).forEach(this::deleteResume);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
 }
