@@ -2,18 +2,21 @@ package com.urise.webapp.storage;
 
 import com.urise.webapp.exception.StorageException;
 import com.urise.webapp.model.Resume;
+import com.urise.webapp.storage.serializer.Serializer;
 
 import java.io.*;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
-public abstract class AbstractFileStorage extends AbstractStorage<File> {
+public class FileStorage extends AbstractStorage<File> {
 
     protected File directory;
-    private int size;
+    private Serializer serializer;
 
-    public AbstractFileStorage(File directory) {
+
+    public FileStorage(String path, Serializer serializer) {
+        File directory = new File(path);
         Objects.requireNonNull(directory, "Directory must not be null");
         if (!directory.isDirectory()) {
             throw new IllegalArgumentException(directory.getAbsolutePath() + " is not a directory");
@@ -22,16 +25,22 @@ public abstract class AbstractFileStorage extends AbstractStorage<File> {
             throw new IllegalArgumentException(directory.getAbsolutePath() + " is not readable/writable");
         }
         this.directory = directory;
+        this.serializer = serializer;
+
     }
 
     @Override
     protected List<Resume> getAll() {
         List<Resume> resumes = new ArrayList<>();
         File[] files = directory.listFiles();
-        Objects.requireNonNull(files);
-        for (File file : files) {
-            resumes.add(getResume(file));
+        if (files != null)  {
+            for (File file : files) {
+                resumes.add(getResume(file));
+            }
+        } else {
+            throw new StorageException("Directory must be not empty", directory.getName());
         }
+
         return resumes;
     }
 
@@ -39,11 +48,10 @@ public abstract class AbstractFileStorage extends AbstractStorage<File> {
     public void insert(Resume r, File file) {
         try {
             file.createNewFile();
-            write(r, new BufferedOutputStream(new FileOutputStream(file)));
         } catch (IOException e) {
             throw new StorageException("IO error", file.getName(), e);
         }
-        size++;
+        updateResume(r, file);
     }
 
     @Override
@@ -59,7 +67,7 @@ public abstract class AbstractFileStorage extends AbstractStorage<File> {
     @Override
     public void updateResume(Resume r, File file) {
         try {
-            write(r, new FileOutputStream(file));
+            serializer.write(r, new BufferedOutputStream(new FileOutputStream(file)));
         } catch (IOException e) {
             throw new StorageException("IO error", file.getName(), e);
         }
@@ -67,14 +75,15 @@ public abstract class AbstractFileStorage extends AbstractStorage<File> {
 
     @Override
     public void deleteResume(File file) {
-        file.delete();
-        size--;
+       if (!file.delete()) {
+           throw new StorageException("File cannot be deleted", file.getName());
+       }
     }
 
     @Override
     public Resume getResume(File file) {
         try {
-            return readResumeFrom(new BufferedInputStream(new FileInputStream(file)));
+            return serializer.read(new BufferedInputStream(new FileInputStream(file)));
         } catch (IOException e) {
             throw new StorageException("File reading error", file.getName(), e);
         }
@@ -82,21 +91,18 @@ public abstract class AbstractFileStorage extends AbstractStorage<File> {
 
     @Override
     public int size() {
-        return size;
+        return Objects.requireNonNull(directory.listFiles()).length;
     }
 
     @Override
     public void clear() {
         File[] files = directory.listFiles();
-        Objects.requireNonNull(files);
-        for (File file : files) {
-            file.delete();
+        if (files != null) {
+            for (File file : files) {
+                deleteResume(file);
+            }
+        } else {
+            throw new StorageException("Directory must be not empty", directory.getName());
         }
-        size = 0;
     }
-
-    abstract void write(Resume r, OutputStream os) throws IOException;
-
-    abstract Resume readResumeFrom(InputStream is) throws IOException;
-
 }

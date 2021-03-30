@@ -1,7 +1,8 @@
-package com.urise.webapp.storage;
+package com.urise.webapp.storage.serializer;
 
 import com.urise.webapp.exception.StorageException;
 import com.urise.webapp.model.Resume;
+import com.urise.webapp.storage.serializer.Serializer;
 
 import java.io.*;
 
@@ -15,7 +16,7 @@ public class ObjectSerializier implements Serializer {
     }
 
     @Override
-    public Resume readResumeFrom(InputStream is) throws IOException {
+    public Resume read(InputStream is) throws IOException {
         try (ObjectInputStream ois = new ObjectInputStream(is)) {
             return (Resume) ois.readObject();
         } catch (ClassNotFoundException e) {

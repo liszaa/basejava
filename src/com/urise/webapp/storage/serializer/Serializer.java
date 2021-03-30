@@ -1,4 +1,4 @@
-package com.urise.webapp.storage;
+package com.urise.webapp.storage.serializer;
 
 import com.urise.webapp.model.Resume;
 
@@ -10,5 +10,5 @@ public interface Serializer {
 
     void write(Resume r, OutputStream os) throws IOException;
 
-    Resume readResumeFrom(InputStream is) throws IOException;
+    Resume read(InputStream is) throws IOException;
 }
