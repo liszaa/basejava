@@ -1,13 +1,19 @@
 package com.urise.webapp.model;
 
+import javax.xml.bind.annotation.XmlAccessType;
+import javax.xml.bind.annotation.XmlAccessorType;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Objects;
 
-public class BulletedListSection implements Section {
+
+public class BulletedListSection extends Section {
 
     private static final long serialVersionUID = 6406750252899917034L;
     private List<String> content;
+
+    public BulletedListSection() {
+    }
 
     public BulletedListSection(List<String> content) {
         Objects.requireNonNull(content, "content must be not null");

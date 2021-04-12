@@ -6,7 +6,7 @@ import com.urise.webapp.storage.serializer.Serializer;
 
 import java.io.*;
 
-public class ObjectSerializier implements Serializer {
+public class ObjectSerializer implements Serializer {
 
     @Override
     public void write(Resume r, OutputStream os) throws IOException {

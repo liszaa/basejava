@@ -1,6 +1,7 @@
 package com.urise.webapp.model;
 
-import java.io.Serializable;
+import javax.xml.bind.annotation.*;
+
 
 public enum SectionType {
     OBJECTIVE("Позиция"),

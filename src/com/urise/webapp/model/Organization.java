@@ -1,5 +1,9 @@
 package com.urise.webapp.model;
 
+import com.urise.webapp.util.LocalDateAdapter;
+
+import javax.xml.bind.annotation.*;
+import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
 import java.io.Serializable;
 import java.time.LocalDate;
 import java.util.ArrayList;
@@ -7,11 +11,15 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Objects;
 
+@XmlAccessorType(XmlAccessType.FIELD)
 public class Organization implements Serializable {
 
     private static final long serialVersionUID = -2466447498750409674L;
-    private final Link homePage;
+    private Link homePage;
     private List<Position> positions = new ArrayList<>();
+
+    public Organization() {
+    }
 
     public Organization(String name, String url, Position... positions) {
         this(new Link(name, url), Arrays.asList(positions));
@@ -55,12 +63,17 @@ public class Organization implements Serializable {
         return string.toString();
     }
 
+    @XmlAccessorType(XmlAccessType.FIELD)
     public static class Position implements Serializable {
 
         private static final long serialVersionUID = 264061032491292813L;
         private String title;
         private String description;
+
+        @XmlJavaTypeAdapter(LocalDateAdapter.class)
         private LocalDate start;
+
+        @XmlJavaTypeAdapter(LocalDateAdapter.class)
         private LocalDate finish;
 
         public Position(String title, String description, LocalDate start, LocalDate finish) {
@@ -71,6 +84,9 @@ public class Organization implements Serializable {
             this.description = description;
             this.start = start;
             this.finish = finish;
+        }
+
+        public Position() {
         }
 
         String getTitle() {

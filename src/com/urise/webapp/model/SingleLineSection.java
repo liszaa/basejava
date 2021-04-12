@@ -1,11 +1,17 @@
 package com.urise.webapp.model;
 
+import javax.xml.bind.annotation.XmlAccessType;
+import javax.xml.bind.annotation.XmlAccessorType;
 import java.util.Objects;
 
-public class SingleLineSection implements Section {
+
+public class SingleLineSection extends Section {
 
     private static final long serialVersionUID = 4746336089527833352L;
     private String content;
+
+    public SingleLineSection() {
+    }
 
     public SingleLineSection(String content) {
         Objects.requireNonNull(content, "content must be not null");
