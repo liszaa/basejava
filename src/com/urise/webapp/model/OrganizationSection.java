@@ -16,7 +16,15 @@ public class OrganizationSection extends Section {
     public OrganizationSection() {
     }
 
-    OrganizationSection(List<Organization> content) {
+    public List<Organization> getExperiences() {
+        return experiences;
+    }
+
+    public void setExperiences(List<Organization> experiences) {
+        this.experiences = experiences;
+    }
+
+    public OrganizationSection(List<Organization> content) {
         Objects.requireNonNull(content, "content must be not null");
         this.experiences = content;
     }

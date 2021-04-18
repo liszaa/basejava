@@ -1,8 +1,6 @@
 package com.urise.webapp.model;
 
 
-import javax.xml.bind.annotation.*;
-
 public enum ContactType {
     TELEPHONE("Телефон"),
     SKYPE("Skype"),

@@ -73,7 +73,7 @@
                         <title>Должность в организации1 Лиза : UUID_4</title>
                         <description>Описание организации1</description>
                         <start>2013-10-01</start>
-                        <finish>2021-04-11</finish>
+                        <finish>2021-04-18</finish>
                     </positions>
                 </experiences>
                 <experiences>
@@ -112,8 +112,9 @@
                     </homePage>
                     <positions>
                         <title>Описание обучения1 Лиза : UUID_4</title>
+                        <description></description>
                         <start>2013-10-01</start>
-                        <finish>2021-04-11</finish>
+                        <finish>2021-04-18</finish>
                     </positions>
                 </experiences>
                 <experiences>
@@ -123,6 +124,7 @@
                     </homePage>
                     <positions>
                         <title>Описание обучения22 Лиза : UUID_4</title>
+                        <description></description>
                         <start>2014-10-01</start>
                         <finish>2016-01-01</finish>
                     </positions>
@@ -134,6 +136,7 @@
                     </homePage>
                     <positions>
                         <title>Описание обучения3 Лиза : UUID_4</title>
+                        <description></description>
                         <start>2012-01-01</start>
                         <finish>2014-10-01</finish>
                     </positions>

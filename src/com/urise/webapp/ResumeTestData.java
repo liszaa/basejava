@@ -385,7 +385,7 @@ public class ResumeTestData {
                 "Обучение1",
                 new Organization.Position(
                         "Описание обучения1 " + fullName + " : " + uuid,
-                        null,
+                         "",
                         LocalDate.of(2013, 10, 1),
                         LocalDate.now()
                 )
@@ -396,7 +396,7 @@ public class ResumeTestData {
                 "Обучение2",
                 new Organization.Position(
                         "Описание обучения22 " + fullName + " : " + uuid,
-                        null,
+                        "",
                         LocalDate.of(2014, 10, 01),
                         LocalDate.of(2016, 1, 1)
                 )
@@ -407,7 +407,7 @@ public class ResumeTestData {
                 "Обучение3",
                 new Organization.Position(
                         "Описание обучения3 " + fullName + " : " + uuid,
-                        null,
+                        "",
                         LocalDate.of(2012, 1, 1),
                         LocalDate.of(2014, 10, 1)
                 )
@@ -415,6 +415,8 @@ public class ResumeTestData {
 
         OrganizationSection educations = new OrganizationSection(organ1, organ2, organ3);
         resume.addSection(SectionType.EDUCATION, educations);
+
+
 
         return resume;
 

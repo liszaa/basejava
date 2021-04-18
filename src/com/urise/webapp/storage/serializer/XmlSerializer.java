@@ -12,7 +12,7 @@ import java.nio.charset.StandardCharsets;
 
 public class XmlSerializer implements Serializer {
 
-    JAXBContext context;
+    private JAXBContext context;
     private Marshaller marshaller;
     private Unmarshaller unmarshaller;
 
@@ -32,7 +32,6 @@ public class XmlSerializer implements Serializer {
         try (Writer w = new OutputStreamWriter(os, StandardCharsets.UTF_8)) {
             marshaller.setProperty(Marshaller.JAXB_FORMATTED_OUTPUT, true);
             marshaller.marshal(r, w);
-            marshaller.marshal(r, System.out);
         } catch (JAXBException e) {
             e.printStackTrace();
         }
