@@ -11,6 +11,7 @@ import java.util.Map;
 
 public class DataSerializer implements Serializer {
 
+
     @Override
     public void write(Resume r, OutputStream os) throws IOException {
         try (DataOutputStream dos = new DataOutputStream(os)) {
@@ -19,23 +20,30 @@ public class DataSerializer implements Serializer {
 
             for (Map.Entry<SectionType, Section> entry : r.getSections().entrySet()) {
                 Section section = entry.getValue();
-                dos.writeUTF(section.getClass().getName());
-                dos.writeUTF(entry.getKey().name());
+                SectionType type = entry.getKey();
+                dos.writeUTF(type.name());
 
-                if (section instanceof SingleLineSection) {
-                    String content = ((SingleLineSection) section).getContent();
-                    dos.writeUTF(content);
+                switch (type) {
+                    case OBJECTIVE:
+                    case PERSONAL:
+                        String contentSingleLineSection = ((SingleLineSection) section).getContent();
+                        System.out.println(contentSingleLineSection);
+                        dos.writeUTF(contentSingleLineSection);
+                        break;
 
-                } else if (section instanceof BulletedListSection) {
-                    BulletedListSection listSection = (BulletedListSection) section;
-                    List<String> content = listSection.getContent();
-                    dos.writeInt(content.size());
-                    for (String line : content) {
-                        dos.writeUTF(line);
-                    }
-
-                } else if (section instanceof OrganizationSection) {
-                    writeOrganizationSection((OrganizationSection) section, entry, dos);
+                    case ACHIEVEMENT:
+                    case QUALIFICATIONS:
+                        BulletedListSection listSection = (BulletedListSection) section;
+                        List<String> contentBulletedListSection = listSection.getContent();
+                        dos.writeInt(contentBulletedListSection.size());
+                        for (String line : contentBulletedListSection) {
+                            dos.writeUTF(line);
+                        }
+                        break;
+                    case EXPERIENCE:
+                    case EDUCATION:
+                        writeOrganizationSection((OrganizationSection) section, entry, dos);
+                        break;
                 }
             }
         }
@@ -48,41 +56,41 @@ public class DataSerializer implements Serializer {
             Resume resume = readResumeWithGeneralInfo(dis);
             resume.setContacts(readContact(dis));
 
-            try {
                 do {
-                    String className = dis.readUTF();
-                    Class sectionClass = Class.forName(className);
+                    SectionType type = SectionType.valueOf(dis.readUTF());
+                    switch (type) {
+                        case PERSONAL:
+                        case OBJECTIVE:
+                            String content = dis.readUTF();
+                            SingleLineSection section = new SingleLineSection(content);
+                            resume.addSection(type, section);
+                            break;
 
-                    if (sectionClass.equals(SingleLineSection.class)) {
-                        SectionType type = SectionType.valueOf(dis.readUTF());
-                        String content = dis.readUTF();
-                        SingleLineSection section = new SingleLineSection(content);
-                        resume.addSection(type, section);
+                        case ACHIEVEMENT:
+                        case QUALIFICATIONS:
+                            List<String> lines = new ArrayList<>();
+                            int sizeOfBulletedListSection = dis.readInt();
+                            System.out.println(sizeOfBulletedListSection);
+                            for (int i = 0; i < sizeOfBulletedListSection; i++) {
+                                String line = dis.readUTF();
+                                System.out.println(line);
+                                lines.add(line);
+                            }
+                            resume.addSection(type, new BulletedListSection(lines));
+                            break;
+
+                        case EXPERIENCE:
+                        case EDUCATION:
+                            setOrganizationSection(dis, resume, type);
+                            break;
                     }
+                }  while (dis.available() > 0);
 
-                    if (sectionClass.equals(BulletedListSection.class)) {
-                        SectionType type = SectionType.valueOf(dis.readUTF());
-                        List<String> lines = new ArrayList<>();
-                        int sizeOfBulletedListSection = dis.readInt();
-                        for (int i = 0; i < sizeOfBulletedListSection; i ++) {
-                            lines.add(dis.readUTF());
-                        }
-                        resume.addSection(type, new BulletedListSection(lines));
-                    }
-
-                    if (sectionClass.equals(OrganizationSection.class)) {
-                        setOrganizationSection(dis, resume);
-                    }
-
-                } while (dis.available() > 0);
-
-            } catch (ClassNotFoundException e) {
-                e.printStackTrace();
-            }
-
-            return resume;
+                System.out.println(resume);
+                return resume;
         }
     }
+
 
     private void writeGeneralInfo(Resume r, DataOutputStream dos) throws IOException {
         dos.writeUTF(r.getUuid());
@@ -114,16 +122,18 @@ public class DataSerializer implements Serializer {
                 dos.writeUTF(position.getDescription()); //что делал
 
                 LocalDate start = position.getStart();
-                dos.writeInt(start.getYear());
-                dos.writeInt(start.getMonthValue());
-                dos.writeInt(start.getDayOfMonth());
+                writeLocalDate(dos, start);
 
                 LocalDate finish = position.getFinish();
-                dos.writeInt(finish.getYear());
-                dos.writeInt(finish.getMonthValue());
-                dos.writeInt(finish.getDayOfMonth());
+                writeLocalDate(dos, finish);
             }
         }
+    }
+
+    private void writeLocalDate(DataOutputStream dos, LocalDate finish) throws IOException {
+        dos.writeInt(finish.getYear());
+        dos.writeInt(finish.getMonthValue());
+        dos.writeInt(finish.getDayOfMonth());
     }
 
     private Resume readResumeWithGeneralInfo(DataInputStream dis) throws IOException {
@@ -144,8 +154,8 @@ public class DataSerializer implements Serializer {
         return contacts;
     }
 
-    private void setOrganizationSection(DataInputStream dis, Resume resume) throws IOException {
-        SectionType type = SectionType.valueOf(dis.readUTF());
+    private void setOrganizationSection(DataInputStream dis, Resume resume, SectionType type) throws IOException {
+
         List<Organization> organizations = new ArrayList<>();
 
         // кол-во организаций в секции
@@ -170,15 +180,19 @@ public class DataSerializer implements Serializer {
                 String description = dis.readUTF();
 
                 //старт
-                LocalDate start = LocalDate.of(dis.readInt(), dis.readInt(), dis.readInt());
+                LocalDate start = readLocalDate(dis);
 
                 //конец
-                LocalDate finish = LocalDate.of(dis.readInt(), dis.readInt(), dis.readInt());
+                LocalDate finish = readLocalDate(dis);
                 positions.add(new Organization.Position(profession, description, start, finish));
 
             }
             organizations.add(new Organization(nameOfOrganization, url, positions));
         }
         resume.addSection(type, new OrganizationSection(organizations));
+    }
+
+    private LocalDate readLocalDate(DataInputStream dis) throws IOException {
+        return LocalDate.of(dis.readInt(), dis.readInt(), dis.readInt());
     }
 }

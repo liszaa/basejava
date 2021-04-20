@@ -311,8 +311,8 @@ public class ResumeTestData {
 
         Resume resume = new Resume(uuid, fullName);
 
-        Map<SectionType, Section> sections = new EnumMap<>(SectionType.class);
-        Map<ContactType, String> contacts = new EnumMap<>(ContactType.class);
+//        Map<SectionType, Section> sections = new EnumMap<>(SectionType.class);
+//        Map<ContactType, String> contacts = new EnumMap<>(ContactType.class);
 
         // contacts
         resume.addContact(ContactType.TELEPHONE, "Телефон " + fullName + " : " + uuid);
@@ -345,8 +345,8 @@ public class ResumeTestData {
 
         // Section EXPERIENCE("Опыт работы")
         Organization organization1 = new Organization(
-                " ",
                 "Организация1",
+                "",
                 new Organization.Position("Должность в организации1 " + fullName + " : " + uuid,
                         "Описание организации1",
                          LocalDate.of(2013, 10, 1),
@@ -355,8 +355,8 @@ public class ResumeTestData {
         );
 
         Organization organization2 = new Organization(
-                " ",
-                "Организация2",
+                "Организация2 ",
+                "",
                  new Organization.Position(
                          "Должность в организации2 " + fullName + " : " + uuid,
                          "Описание организации2",
@@ -366,8 +366,8 @@ public class ResumeTestData {
         );
 
         Organization organization3 = new Organization(
-                " ",
                 "Организация3",
+                "",
                 new Organization.Position(
                         "Должность в организации3 " + fullName + " : " + uuid,
                         "Описание организации2",
@@ -381,8 +381,8 @@ public class ResumeTestData {
 
         // Section EDUCATION("Образование")
         Organization organ1 = new Organization(
-                " ",
                 "Обучение1",
+                "",
                 new Organization.Position(
                         "Описание обучения1 " + fullName + " : " + uuid,
                          "",
@@ -392,8 +392,8 @@ public class ResumeTestData {
         );
 
         Organization organ2 = new Organization(
-                " ",
                 "Обучение2",
+                "",
                 new Organization.Position(
                         "Описание обучения22 " + fullName + " : " + uuid,
                         "",
@@ -403,8 +403,8 @@ public class ResumeTestData {
         );
 
         Organization organ3 = new Organization(
-                " ",
                 "Обучение3",
+                "",
                 new Organization.Position(
                         "Описание обучения3 " + fullName + " : " + uuid,
                         "",
@@ -415,8 +415,6 @@ public class ResumeTestData {
 
         OrganizationSection educations = new OrganizationSection(organ1, organ2, organ3);
         resume.addSection(SectionType.EDUCATION, educations);
-
-
 
         return resume;
 
