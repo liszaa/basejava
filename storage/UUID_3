@@ -67,19 +67,16 @@
                 <experiences>
                     <homePage>
                         <name>Организация1</name>
-                        <url></url>
                     </homePage>
                     <positions>
                         <title>Должность в организации1 Максим : UUID_3</title>
-                        <description>Описание организации1</description>
                         <start>2013-10-01</start>
-                        <finish>2021-04-25</finish>
+                        <finish>2021-04-26</finish>
                     </positions>
                 </experiences>
                 <experiences>
                     <homePage>
                         <name>Организация2 </name>
-                        <url></url>
                     </homePage>
                     <positions>
                         <title>Должность в организации2 Максим : UUID_3</title>
@@ -91,7 +88,6 @@
                 <experiences>
                     <homePage>
                         <name>Организация3</name>
-                        <url></url>
                     </homePage>
                     <positions>
                         <title>Должность в организации3 Максим : UUID_3</title>
@@ -108,23 +104,19 @@
                 <experiences>
                     <homePage>
                         <name>Обучение1</name>
-                        <url></url>
                     </homePage>
                     <positions>
                         <title>Описание обучения1 Максим : UUID_3</title>
-                        <description></description>
                         <start>2013-10-01</start>
-                        <finish>2021-04-25</finish>
+                        <finish>2021-04-26</finish>
                     </positions>
                 </experiences>
                 <experiences>
                     <homePage>
                         <name>Обучение2</name>
-                        <url></url>
                     </homePage>
                     <positions>
                         <title>Описание обучения22 Максим : UUID_3</title>
-                        <description></description>
                         <start>2014-10-01</start>
                         <finish>2016-01-01</finish>
                     </positions>
@@ -132,11 +124,9 @@
                 <experiences>
                     <homePage>
                         <name>Обучение3</name>
-                        <url></url>
                     </homePage>
                     <positions>
                         <title>Описание обучения3 Максим : UUID_3</title>
-                        <description></description>
                         <start>2012-01-01</start>
                         <finish>2014-10-01</finish>
                     </positions>

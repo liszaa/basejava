@@ -5,12 +5,11 @@ import java.util.List;
 
 public class MainConcurrency {
     public static final int THREADS_NUMBER = 10000;
-    private static final Object LOCK = new Object();
     private final static Integer a = 8;
     private final static Integer b = 10;
     private int counter;
 
-    public static void main(String[] args) throws InterruptedException {
+    public static void main(String[] args)  {
         System.out.println(Thread.currentThread().getName());
         final MainConcurrency mainConcurrency = new MainConcurrency();
 

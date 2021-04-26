@@ -14,7 +14,8 @@ import java.util.Objects;
 @XmlAccessorType(XmlAccessType.FIELD)
 public class Organization implements Serializable {
 
-    private static final long serialVersionUID = -2466447498750409674L;
+
+    private static final long serialVersionUID = 4451231965402811222L;
     private Link homePage;
     private List<Position> positions = new ArrayList<>();
 
@@ -87,7 +88,6 @@ public class Organization implements Serializable {
 
         public Position(String title, String description, LocalDate start, LocalDate finish) {
             Objects.requireNonNull(title, "title must be not null");
-            Objects.requireNonNull(description, "description must be not null");
             Objects.requireNonNull(start, "start must be not null");
             Objects.requireNonNull(finish, "finish must be not null");
             this.title = title;
@@ -120,10 +120,10 @@ public class Organization implements Serializable {
             if (this == o) return true;
             if (o == null || getClass() != o.getClass()) return false;
             Position position = (Position) o;
-            return Objects.equals(title, position.title) &&
+            return title.equals(position.title) &&
                     Objects.equals(description, position.description) &&
-                    Objects.equals(start, position.start) &&
-                    Objects.equals(finish, position.finish);
+                    start.equals(position.start) &&
+                    finish.equals(position.finish);
         }
 
         @Override

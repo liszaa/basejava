@@ -32,6 +32,7 @@ public class DataSerializer implements Serializer {
 
                     case ACHIEVEMENT:
                     case QUALIFICATIONS:
+
                         writeCollection(dos, ((BulletedListSection) section).getContent(), dos::writeUTF);
                         break;
 
@@ -44,7 +45,7 @@ public class DataSerializer implements Serializer {
                             dos.writeUTF(homePage.getName());
 
                             // урл организации
-                            dos.writeUTF(homePage.getUrl());
+                            dos.writeUTF(homePage.getUrl() == null ? "" : homePage.getUrl());
 
                             // список позиций
                             writeCollection(dos, org.getPositions(), position -> {
@@ -52,18 +53,22 @@ public class DataSerializer implements Serializer {
                                 dos.writeUTF(position.getTitle());
 
                                 //что делал
-                                dos.writeUTF(position.getDescription());
+                                String description = position.getDescription();
+                                dos.writeUTF(description == null ? "" : description);
 
                                 LocalDate start = position.getStart();
                                 writeLocalDate(dos, start);
 
                                 LocalDate finish = position.getFinish();
                                 writeLocalDate(dos, finish);
+
                             });
                                 });
                         break;
                 }
                     });
+            System.out.println("Contacts before serialization".toUpperCase());
+            System.out.println(r.getContacts());
         }
     }
 
@@ -73,12 +78,16 @@ public class DataSerializer implements Serializer {
         try (DataInputStream dis = new DataInputStream(is)) {
 
             Resume resume = readResumeWithGeneralInfo(dis);
+
             resume.setContacts(readContact(dis));
             int sectionSize = dis.readInt();
 
-                for (int i = 0; i < sectionSize; i++ ) {
+                for (int i = 0; i < sectionSize; i++) {
+
                     SectionType type = SectionType.valueOf(dis.readUTF());
+
                     switch (type) {
+
                         case PERSONAL:
                         case OBJECTIVE:
                             String content = dis.readUTF();
@@ -88,37 +97,44 @@ public class DataSerializer implements Serializer {
 
                         case ACHIEVEMENT:
                         case QUALIFICATIONS:
-                            List<String> lines = new ArrayList<>();
-                            int sizeOfBulletedListSection = dis.readInt();
-                            System.out.println(sizeOfBulletedListSection);
-                            for (int j = 0; j < sizeOfBulletedListSection; j++) {
-                                String line = dis.readUTF();
-                                System.out.println(line);
-                                lines.add(line);
-                            }
+                            List<String> lines = readList(dis, dis::readUTF);
                             resume.addSection(type, new BulletedListSection(lines));
                             break;
 
                         case EXPERIENCE:
                         case EDUCATION:
-                            setOrganizationSection(dis, resume, type);
+                            List<Organization> organizations = readList(dis, () -> {
+                                // имя организации
+                                String nameOfOrganization = dis.readUTF();
+
+                                // урл организации
+                                String string = dis.readUTF();
+                                String url = string.equals("") ? null : string;
+
+                                List<Organization.Position> positions = readList(dis, () -> {
+
+                                    String profession = dis.readUTF();
+                                    //что делал
+                                    String line = dis.readUTF();
+                                    String description = line.equals("") ? null : line;
+                                    //старт
+                                    LocalDate start = readLocalDate(dis);
+                                    //конец
+                                    LocalDate finish = readLocalDate(dis);
+
+                                    return new Organization.Position(profession, description, start, finish);
+                                });
+
+                                return new Organization(nameOfOrganization, url, positions);
+                            });
+                            resume.addSection(type, new OrganizationSection(organizations));
                             break;
                     }
                 }
-                System.out.println(resume);
+                System.out.println("Contacts after serialization".toUpperCase());
+                System.out.println(resume.getContacts());
                 return resume;
         }
-    }
-
-    private <T> void writeCollection(DataOutputStream dos, Collection<T> collection, CustomWriter<T> writer) throws IOException {
-        dos.writeInt(collection.size());
-        for (T t : collection) {
-            writer.write(t);
-        }
-    }
-
-    private interface CustomWriter<T> {
-        void write(T t) throws IOException;
     }
 
 
@@ -127,6 +143,16 @@ public class DataSerializer implements Serializer {
         dos.writeUTF(r.getFullName());
     }
 
+    private interface CustomWriter<T> {
+        void write(T t) throws IOException;
+    }
+
+    private <T> void writeCollection(DataOutputStream dos, Collection<T> collection, CustomWriter<T> writer) throws IOException {
+        dos.writeInt(collection.size());
+        for (T t : collection) {
+            writer.write(t);
+        }
+    }
 
     private void writeLocalDate(DataOutputStream dos, LocalDate finish) throws IOException {
         dos.writeInt(finish.getYear());
@@ -142,7 +168,7 @@ public class DataSerializer implements Serializer {
 
     private Map<ContactType, String> readContact(DataInputStream dis) throws IOException {
         int count = dis.readInt();
-        Map<ContactType, String> contacts = new HashMap<>();
+        Map<ContactType, String> contacts = new LinkedHashMap<>();
 
         for (int i = 0; i < count; i ++) {
             String type = dis.readUTF();
@@ -152,42 +178,17 @@ public class DataSerializer implements Serializer {
         return contacts;
     }
 
-    private void setOrganizationSection(DataInputStream dis, Resume resume, SectionType type) throws IOException {
+    private interface CustomElementReader<T> {
+        T read() throws IOException;
+    }
 
-        List<Organization> organizations = new ArrayList<>();
-
-        // кол-во организаций в секции
-        int sizeOfOrganizationSection = dis.readInt();
-
-        // цикл на считывание всех организаций
-        for (int i = 0; i < sizeOfOrganizationSection; i++) {
-            // имя организации
-            String nameOfOrganization = dis.readUTF();
-
-            // урл организации
-            String url = dis.readUTF();
-
-            //кол-во позиций в организации
-            int sizeOfOrganization = dis.readInt();
-            List<Organization.Position> positions = new ArrayList<>();
-            for (int j = 0; j < sizeOfOrganization; j++) {
-                //профессия
-                String profession = dis.readUTF();
-
-                //что делал
-                String description = dis.readUTF();
-
-                //старт
-                LocalDate start = readLocalDate(dis);
-
-                //конец
-                LocalDate finish = readLocalDate(dis);
-                positions.add(new Organization.Position(profession, description, start, finish));
-
-            }
-            organizations.add(new Organization(nameOfOrganization, url, positions));
+    private <T> List<T> readList(DataInputStream dis, CustomElementReader<T> reader) throws IOException {
+        int listSize = dis.readInt();
+        List<T> list = new ArrayList<>();
+        for (int i = 0; i < listSize; i++) {
+            list.add(reader.read());
         }
-        resume.addSection(type, new OrganizationSection(organizations));
+        return list;
     }
 
     private LocalDate readLocalDate(DataInputStream dis) throws IOException {

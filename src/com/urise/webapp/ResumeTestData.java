@@ -118,13 +118,10 @@ public class ResumeTestData {
 
         Organization organization2 = new Organization(
                 "Wrike",
-                "https://www.wrike.com/",
+                null,
                 new Organization.Position(
                     "Старший разработчик (backend)",
-                    "Проектирование и разработка онлайн платформы управления проектами Wrike (Java 8 API, " +
-                        "Maven, Spring,\n" +
-                        "MyBatis, Guava, Vaadin, PostgreSQL, Redis). Двухфакторная аутентификация, авторизация " +
-                        "по OAuth1, OAuth2, JWT SSO.",
+                    null,
                     LocalDate.of(2014, 10, 01),
                     LocalDate.of(2016, 1, 1)
                 )
@@ -311,9 +308,6 @@ public class ResumeTestData {
 
         Resume resume = new Resume(uuid, fullName);
 
-//        Map<SectionType, Section> sections = new EnumMap<>(SectionType.class);
-//        Map<ContactType, String> contacts = new EnumMap<>(ContactType.class);
-
         // contacts
         resume.addContact(ContactType.TELEPHONE, "Телефон " + fullName + " : " + uuid);
         resume.addContact(ContactType.SKYPE, "Skype " + fullName + " : " + uuid);
@@ -326,18 +320,18 @@ public class ResumeTestData {
         // Section OBJECTIVE("Позиция")
         SingleLineSection objective = new SingleLineSection("Позиция " + fullName + " : " + uuid);
         resume.addSection(SectionType.OBJECTIVE, objective);
-
-        // Section PERSONAL("Личные качества")
+//
+//        // Section PERSONAL("Личные качества")
         SingleLineSection personal = new SingleLineSection("Личные качества " + fullName + " : " + uuid);
         resume.addSection(SectionType.PERSONAL, personal);
-
-        // Section ACHIEVEMENT("Достижения")
+//
+//        // Section ACHIEVEMENT("Достижения")
         BulletedListSection achievement = new BulletedListSection("Достижение1 " + fullName + " : " + uuid,
                                                                   "Достижение2 " + fullName + " : " + uuid,
                                                                   "Достижение3 " + fullName + " : " + uuid);
         resume.addSection(SectionType.ACHIEVEMENT, achievement);
-
-        // Section QUALIFICATIONS("Квалификация")
+//
+//        // Section QUALIFICATIONS("Квалификация")
         BulletedListSection qualification = new BulletedListSection("Квалификация1 " + fullName + " : " + uuid,
                                                                     "Квалификация2 " + fullName + " : " + uuid,
                                                                     "Квалификация3 " + fullName + " : " + uuid);
@@ -346,9 +340,9 @@ public class ResumeTestData {
         // Section EXPERIENCE("Опыт работы")
         Organization organization1 = new Organization(
                 "Организация1",
-                "",
+                null,
                 new Organization.Position("Должность в организации1 " + fullName + " : " + uuid,
-                        "Описание организации1",
+                        null,
                          LocalDate.of(2013, 10, 1),
                          LocalDate.now()
                 )
@@ -356,7 +350,7 @@ public class ResumeTestData {
 
         Organization organization2 = new Organization(
                 "Организация2 ",
-                "",
+                null,
                  new Organization.Position(
                          "Должность в организации2 " + fullName + " : " + uuid,
                          "Описание организации2",
@@ -367,7 +361,7 @@ public class ResumeTestData {
 
         Organization organization3 = new Organization(
                 "Организация3",
-                "",
+                null,
                 new Organization.Position(
                         "Должность в организации3 " + fullName + " : " + uuid,
                         "Описание организации2",
@@ -378,14 +372,14 @@ public class ResumeTestData {
 
         OrganizationSection experiences = new OrganizationSection(organization1, organization2, organization3);
         resume.addSection(SectionType.EXPERIENCE, experiences);
-
+//
         // Section EDUCATION("Образование")
         Organization organ1 = new Organization(
                 "Обучение1",
-                "",
+                null,
                 new Organization.Position(
                         "Описание обучения1 " + fullName + " : " + uuid,
-                         "",
+                         null,
                         LocalDate.of(2013, 10, 1),
                         LocalDate.now()
                 )
@@ -393,10 +387,10 @@ public class ResumeTestData {
 
         Organization organ2 = new Organization(
                 "Обучение2",
-                "",
+                null,
                 new Organization.Position(
                         "Описание обучения22 " + fullName + " : " + uuid,
-                        "",
+                        null,
                         LocalDate.of(2014, 10, 01),
                         LocalDate.of(2016, 1, 1)
                 )
@@ -404,10 +398,10 @@ public class ResumeTestData {
 
         Organization organ3 = new Organization(
                 "Обучение3",
-                "",
+                null,
                 new Organization.Position(
                         "Описание обучения3 " + fullName + " : " + uuid,
-                        "",
+                        null,
                         LocalDate.of(2012, 1, 1),
                         LocalDate.of(2014, 10, 1)
                 )
