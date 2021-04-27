@@ -336,7 +336,7 @@ public class ResumeTestData {
                                                                     "Квалификация2 " + fullName + " : " + uuid,
                                                                     "Квалификация3 " + fullName + " : " + uuid);
         resume.addSection(SectionType.QUALIFICATIONS, qualification);
-
+//
         // Section EXPERIENCE("Опыт работы")
         Organization organization1 = new Organization(
                 "Организация1",

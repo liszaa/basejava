@@ -14,9 +14,9 @@ public class DataSerializer implements Serializer {
             writeGeneralInfo(r, dos);
             Map<ContactType, String> contacts = r.getContacts();
             writeCollection(dos, contacts.entrySet(), entry -> {
-                        dos.writeUTF(entry.getKey().name());
-                        dos.writeUTF(entry.getValue());
-                    });
+                dos.writeUTF(entry.getKey().name());
+                dos.writeUTF(entry.getValue());
+            });
 
             writeCollection(dos, r.getSections().entrySet(), entry -> {
                 Section section = entry.getValue();
@@ -63,12 +63,11 @@ public class DataSerializer implements Serializer {
                                 writeLocalDate(dos, finish);
 
                             });
-                                });
+                        });
                         break;
                 }
-                    });
-            System.out.println("Contacts before serialization".toUpperCase());
-            System.out.println(r.getContacts());
+            });
+
         }
     }
 
@@ -79,72 +78,67 @@ public class DataSerializer implements Serializer {
 
             Resume resume = readResumeWithGeneralInfo(dis);
 
-            resume.setContacts(readContact(dis));
-            int sectionSize = dis.readInt();
+            resume.setContacts(readMap(dis, () -> {
+                ContactType type = ContactType.valueOf(dis.readUTF());
+                String value = dis.readUTF();
+                return new AbstractMap.SimpleEntry<>(type, value);
+            }));
 
-                for (int i = 0; i < sectionSize; i++) {
+            resume.setSections(readMap(dis, () -> {
+                SectionType type = SectionType.valueOf(dis.readUTF());
+                AbstractMap.SimpleEntry<SectionType, Section> result = null;
 
-                    SectionType type = SectionType.valueOf(dis.readUTF());
+                switch (type) {
+                    case PERSONAL:
+                    case OBJECTIVE:
+                        String content = dis.readUTF();
+                        SingleLineSection section = new SingleLineSection(content);
+                        result = new AbstractMap.SimpleEntry<>(type, section);
+                        break;
 
-                    switch (type) {
+                    case ACHIEVEMENT:
+                    case QUALIFICATIONS:
+                        List<String> lines = readList(dis, dis::readUTF);
+                        result = new AbstractMap.SimpleEntry<>(type, new BulletedListSection(lines));
+                        break;
 
-                        case PERSONAL:
-                        case OBJECTIVE:
-                            String content = dis.readUTF();
-                            SingleLineSection section = new SingleLineSection(content);
-                            resume.addSection(type, section);
-                            break;
+                    case EXPERIENCE:
+                    case EDUCATION:
+                        List<Organization> organizations = readList(dis, () -> {
+                            // имя организации
+                            String nameOfOrganization = dis.readUTF();
 
-                        case ACHIEVEMENT:
-                        case QUALIFICATIONS:
-                            List<String> lines = readList(dis, dis::readUTF);
-                            resume.addSection(type, new BulletedListSection(lines));
-                            break;
+                            // урл организации
+                            String string = dis.readUTF();
+                            String url = string.equals("") ? null : string;
 
-                        case EXPERIENCE:
-                        case EDUCATION:
-                            List<Organization> organizations = readList(dis, () -> {
-                                // имя организации
-                                String nameOfOrganization = dis.readUTF();
+                            List<Organization.Position> positions = readList(dis, () -> {
 
-                                // урл организации
-                                String string = dis.readUTF();
-                                String url = string.equals("") ? null : string;
+                                String profession = dis.readUTF();
+                                //что делал
+                                String line = dis.readUTF();
+                                String description = line.equals("") ? null : line;
+                                //старт
+                                LocalDate start = readLocalDate(dis);
+                                //конец
+                                LocalDate finish = readLocalDate(dis);
 
-                                List<Organization.Position> positions = readList(dis, () -> {
-
-                                    String profession = dis.readUTF();
-                                    //что делал
-                                    String line = dis.readUTF();
-                                    String description = line.equals("") ? null : line;
-                                    //старт
-                                    LocalDate start = readLocalDate(dis);
-                                    //конец
-                                    LocalDate finish = readLocalDate(dis);
-
-                                    return new Organization.Position(profession, description, start, finish);
-                                });
-
-                                return new Organization(nameOfOrganization, url, positions);
+                                return new Organization.Position(profession, description, start, finish);
                             });
-                            resume.addSection(type, new OrganizationSection(organizations));
-                            break;
-                    }
+
+                            return new Organization(nameOfOrganization, url, positions);
+                        });
+                        result = new AbstractMap.SimpleEntry<>(type, new OrganizationSection(organizations));
                 }
-                System.out.println("Contacts after serialization".toUpperCase());
-                System.out.println(resume.getContacts());
-                return resume;
+                return result;
+            }));
+            return resume;
         }
     }
-
 
     private void writeGeneralInfo(Resume r, DataOutputStream dos) throws IOException {
         dos.writeUTF(r.getUuid());
         dos.writeUTF(r.getFullName());
-    }
-
-    private interface CustomWriter<T> {
-        void write(T t) throws IOException;
     }
 
     private <T> void writeCollection(DataOutputStream dos, Collection<T> collection, CustomWriter<T> writer) throws IOException {
@@ -166,20 +160,15 @@ public class DataSerializer implements Serializer {
         return new Resume(uuid, fullName);
     }
 
-    private Map<ContactType, String> readContact(DataInputStream dis) throws IOException {
-        int count = dis.readInt();
-        Map<ContactType, String> contacts = new LinkedHashMap<>();
-
-        for (int i = 0; i < count; i ++) {
-            String type = dis.readUTF();
-            String value = dis.readUTF();
-            contacts.put(ContactType.valueOf(type), value);
+    private <K, V> Map<K, V> readMap(DataInputStream dis, CustomValueReader<K, V> reader) throws IOException {
+        // считываю кол-во элементов в мапе
+        int mapSize = dis.readInt();
+        Map<K, V> map = new LinkedHashMap<>();
+        for (int i = 0; i < mapSize; i++) {
+            Map.Entry<K, V> entry = reader.read();
+            map.put(entry.getKey(), entry.getValue());
         }
-        return contacts;
-    }
-
-    private interface CustomElementReader<T> {
-        T read() throws IOException;
+        return map;
     }
 
     private <T> List<T> readList(DataInputStream dis, CustomElementReader<T> reader) throws IOException {
@@ -193,5 +182,17 @@ public class DataSerializer implements Serializer {
 
     private LocalDate readLocalDate(DataInputStream dis) throws IOException {
         return LocalDate.of(dis.readInt(), dis.readInt(), dis.readInt());
+    }
+
+    private interface CustomWriter<T> {
+        void write(T t) throws IOException;
+    }
+
+    private interface CustomValueReader<K, V> {
+        Map.Entry<K, V> read() throws IOException;
+    }
+
+    private interface CustomElementReader<T> {
+        T read() throws IOException;
     }
 }
