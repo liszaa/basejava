@@ -45,7 +45,8 @@ public class DataSerializer implements Serializer {
                             dos.writeUTF(homePage.getName());
 
                             // урл организации
-                            dos.writeUTF(homePage.getUrl() == null ? "" : homePage.getUrl());
+                            String url = homePage.getUrl();
+                            dos.writeUTF(url == null ? "" : url);
 
                             // список позиций
                             writeCollection(dos, org.getPositions(), position -> {
