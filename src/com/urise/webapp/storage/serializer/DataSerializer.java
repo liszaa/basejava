@@ -41,25 +41,28 @@ public class DataSerializer implements Serializer {
                         writeCollection(dos, ((OrganizationSection) section).getExperiences(), org -> {
                             Link homePage = org.getHomePage();
 
-                            // имя организации
+                            // name of organization
                             dos.writeUTF(homePage.getName());
 
-                            // урл организации
+                            // url of organization
                             String url = homePage.getUrl();
                             dos.writeUTF(url == null ? "" : url);
 
-                            // список позиций
+                            // positions list
                             writeCollection(dos, org.getPositions(), position -> {
-                                //профессия
+
+                                // profession
                                 dos.writeUTF(position.getTitle());
 
-                                //что делал
+                                // employment
                                 String description = position.getDescription();
                                 dos.writeUTF(description == null ? "" : description);
 
+                                // start date
                                 LocalDate start = position.getStart();
                                 writeLocalDate(dos, start);
 
+                                // finish date
                                 LocalDate finish = position.getFinish();
                                 writeLocalDate(dos, finish);
 
@@ -105,31 +108,35 @@ public class DataSerializer implements Serializer {
 
                     case EXPERIENCE:
                     case EDUCATION:
-                        List<Organization> organizations = readList(dis, () -> {
-                            // имя организации
-                            String nameOfOrganization = dis.readUTF();
+                        List<Organization> orgs = readList(dis, () -> {
+                            // name of organization
+                            String orgName = dis.readUTF();
 
-                            // урл организации
+                            // url of organization
                             String string = dis.readUTF();
                             String url = string.equals("") ? null : string;
 
                             List<Organization.Position> positions = readList(dis, () -> {
 
+                                // profession
                                 String profession = dis.readUTF();
-                                //что делал
+
+                                // employment
                                 String line = dis.readUTF();
                                 String description = line.equals("") ? null : line;
-                                //старт
+
+                                // start date
                                 LocalDate start = readLocalDate(dis);
-                                //конец
+
+                                // finish date
                                 LocalDate finish = readLocalDate(dis);
 
                                 return new Organization.Position(profession, description, start, finish);
                             });
 
-                            return new Organization(nameOfOrganization, url, positions);
+                            return new Organization(orgName, url, positions);
                         });
-                        result = new AbstractMap.SimpleEntry<>(type, new OrganizationSection(organizations));
+                        result = new AbstractMap.SimpleEntry<>(type, new OrganizationSection(orgs));
                 }
                 return result;
             }));
@@ -162,7 +169,6 @@ public class DataSerializer implements Serializer {
     }
 
     private <K, V> Map<K, V> readMap(DataInputStream dis, CustomValueReader<K, V> reader) throws IOException {
-        // считываю кол-во элементов в мапе
         int mapSize = dis.readInt();
         Map<K, V> map = new LinkedHashMap<>();
         for (int i = 0; i < mapSize; i++) {
