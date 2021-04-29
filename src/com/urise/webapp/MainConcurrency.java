@@ -13,14 +13,6 @@ public class MainConcurrency {
         System.out.println(Thread.currentThread().getName());
         final MainConcurrency mainConcurrency = new MainConcurrency();
 
-        // deadlock
-        Thread thread1 = new Thread(() -> transfer(a, b));
-        thread1.start();
-
-        Thread thread2 = new Thread(() -> transfer(b, a));
-        thread2.start();
-
-
         List<Thread> threads = new ArrayList<>(THREADS_NUMBER);
 
         for (int i = 0; i < THREADS_NUMBER; i++) {
@@ -42,21 +34,6 @@ public class MainConcurrency {
             }
         });
         System.out.println(mainConcurrency.counter);
-    }
-
-    // deadlock
-    private static void transfer(Integer a, Integer b) {
-        synchronized (a) {
-            try {
-                Thread.sleep(1000);
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            }
-            synchronized (b) {
-                System.out.println(a - b);
-
-            }
-        }
     }
 
     private synchronized void inc() {
