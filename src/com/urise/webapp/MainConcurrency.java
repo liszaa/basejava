@@ -25,7 +25,6 @@ public class MainConcurrency {
             threads.add(thread);
         }
 
-
         threads.forEach(t -> {
             try {
                 t.join();
